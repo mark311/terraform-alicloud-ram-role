@@ -1,23 +1,21 @@
 # terraform-alicloud-ram-role
-Terraform module which create RAM roles on Alibaba Cloud.
-
 =====================================================================
 
-English | [简体中文](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/README-CN.md)
+中文简体 
 
-Terraform module can create custom RAM roles on Alibaba Cloud.
+Terraform模块可以在阿里云上创建自定义RAM角色。
 
-These types of resources are supported:
+支持以下类型的资源：
 
 * [RAM role](https://www.terraform.io/docs/providers/alicloud/r/ram_role.html)
 
-## Terraform versions
+## Terraform 版本
 
-The Module requires Terraform 0.12.
+本 Module 要求使用 Terraform 0.12.
 
-## Usage
+## 用法
 
-#### Create policy using terraform default actions 
+#### 使用Terraform默认的操作创建自定义角色
 
 ```hcl
 module "ram_role" {
@@ -76,20 +74,20 @@ module "ram_policy" {
 }
 ```
 
+## 示例
 
-## Examples
+* [ram-role 示例](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/tree/master/examples/ram-role)
 
-* [ram-role example](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/tree/master/examples/ram-role)
 
-Authors
+作者
 -------
 Created and maintained by Zhou qilin(z17810666992@163.com), He Guimin(@xiaozhu36, heguimin36@163.com)
 
-License
+许可
 ----
 Apache 2 Licensed. See LICENSE for full details.
 
-Reference
+参考
 ---------
 * [Terraform-Provider-Alicloud Github](https://github.com/terraform-providers/terraform-provider-alicloud)
 * [Terraform-Provider-Alicloud Release](https://releases.hashicorp.com/terraform-provider-alicloud/)
