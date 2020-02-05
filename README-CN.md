@@ -1,13 +1,12 @@
-# terraform-alicloud-ram-role
-=====================================================================
+terraform-alicloud-ram-role
+===========================
 
-中文简体 
-
-Terraform模块可以在阿里云上创建自定义RAM角色。
+Terraform模块用于在阿里云上创建自定义RAM角色并为其绑定RAM Policy。
 
 支持以下类型的资源：
 
 * [RAM role](https://www.terraform.io/docs/providers/alicloud/r/ram_role.html)
+* [RAM role attachment](https://www.terraform.io/docs/providers/alicloud/r/ram_role_attachment.html)
 
 ## Terraform 版本
 
@@ -21,35 +20,34 @@ Terraform模块可以在阿里云上创建自定义RAM角色。
 module "ram_role" {
   source = "terraform-alicloud-modules/ram-role/alicloud"
   name   = "test-role"
-  # If parameter `user` not set, current account number all ram users can play the role. 
   users = [
-    # Add a trusted user under a specified account.
+    # 添加可信用户
     {
       user_names = join(",", ["user3", "user4"])
       account_id = "123456789012****"
     },
-    # If not set `account_id`, the default is the current account.
+    # 如果不指定accountID，将使用当前用户
     {
       user_names = join(",", ["user1", "user2"])
     }
   ]
-  services = ["ecs", "apigateway"]
+  // 指定预定义的或者自定义的可信服务
+  services = ["ecs", "apigateway", "oss.aliyuncs.com", "ecs-cn-hangzhou.aliyuncs.com"]
   force    = true
   policies = [
-    # Binding a system policy.
+    # 绑定系统策略
     {
       policy_names = ["AliyunVPCFullAccess","AliyunKafkaFullAccess"]
       policy_type  = "System"
     },
-    # When binding custom policy, make sure this policy has been created.
+    # 绑定自定义策略
     {
       policy_names = ["VpcListTagResources", "RamPolicyForZhangsan"]
       policy_type  = "Custom"
     },
-    # Create policy and bind the ram role.
+    # 绑定自定义策略
     {
       policy_names = module.ram_policy.this_policy_name
-      policy_type  = "Custom"
     }
   ]
 }
@@ -76,7 +74,7 @@ module "ram_policy" {
 
 ## 示例
 
-* [ram-role 示例](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/tree/master/examples/ram-role)
+* [ram-role 完整示例](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/tree/master/examples/complete)
 
 
 作者

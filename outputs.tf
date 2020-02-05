@@ -1,6 +1,6 @@
 output "this_role_name" {
   description = "Name of the ram role"
-  value       = alicloud_ram_role.this.name
+  value       = local.this_role_name
 }
 
 output "this_role_trusted_users" {

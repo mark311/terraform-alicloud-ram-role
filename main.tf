@@ -14,8 +14,10 @@ resource "random_uuid" "this" {}
 # ram_role
 #############################
 locals {
-  name             = var.name != "" ? var.name : substr("terraform-ram-role-${replace(random_uuid.this.result, "-", "")}", 0, 32)
-  defined_services = flatten([for _, service in var.services : lookup(var.defined_services, service, [])])
+  create           = var.existing_role_name != "" ? false : var.create
+  attach_policy    = var.existing_role_name != "" || var.create ? true : false
+  role_name        = var.role_name != "" ? var.role_name : substr("terraform-ram-role-${replace(random_uuid.this.result, "-", "")}", 0, 32)
+  defined_services = distinct(flatten([for _, service in var.services : lookup(var.defined_services, service, [service])]))
 
   trusted_user_list = flatten(
     [
@@ -27,11 +29,13 @@ locals {
       ]
     ]
   )
-  trusted_user = flatten([for _, user in local.trusted_user_list : formatlist("acs:ram::${lookup(user, "account_id")}:user/%s", lookup(user, "user_name"))])
+  trusted_user   = flatten([for _, user in local.trusted_user_list : formatlist("acs:ram::${lookup(user, "account_id")}:user/%s", lookup(user, "user_name"))])
+  this_role_name = var.existing_role_name != "" ? var.existing_role_name : concat(alicloud_ram_role.this.*.name, [""])[0]
 }
 
 resource "alicloud_ram_role" "this" {
-  name        = local.name
+  count       = local.create ? 1 : 0
+  name        = local.role_name
   document    = <<EOF
 		{
 		  "Statement": [
@@ -58,9 +62,9 @@ locals {
   policy_list = flatten(
     [
       for _, obj in var.policies : [
-        for _, name in obj["policy_names"] : {
+        for _, name in distinct(flatten(split(",", obj["policy_names"]))) : {
           policy_name = name
-          policy_type = obj["policy_type"]
+          policy_type = lookup(obj, "policy_type", "Custom")
         }
       ]
     ]
@@ -68,9 +72,9 @@ locals {
 }
 
 resource "alicloud_ram_role_policy_attachment" "this" {
-  count = var.create ? length(local.policy_list) : 0
+  count = local.attach_policy ? length(local.policy_list) : 0
 
-  role_name   = alicloud_ram_role.this.name
+  role_name   = local.this_role_name
   policy_name = lookup(local.policy_list[count.index], "policy_name")
   policy_type = lookup(local.policy_list[count.index], "policy_type")
 }

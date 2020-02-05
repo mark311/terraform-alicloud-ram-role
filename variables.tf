@@ -22,25 +22,31 @@ variable "skip_region_validation" {
 }
 
 variable "create" {
-  description = "Whether to bind role and policy. If false, this role will no policy."
+  description = "Whether to create ram role. If true, the 'users' or 'services' can not be empty."
   type        = bool
   default     = true
 }
 
-variable "name" {
-  description = "The name of role. If not set, a default name with prefix `terraform-ram-role-` will be returned. "
+variable "role_name" {
+  description = "The name of role. If not set, a default name with prefix 'terraform-ram-role-' will be returned. "
+  type        = string
+  default     = ""
+}
+
+variable "existing_role_name" {
+  description = "The name of an existing RAM role. If set, 'create' will be ignored."
   type        = string
   default     = ""
 }
 
 variable "users" {
-  description = "List of the trusted users. Each item can include the following field:`user_names`(RAM user under the designated AliCloud account),`account_id`(designated AliCloud account), if not set `account_id`, the default is the current account. If not set all, current account number all ram users can play the role."
+  description = "List of the trusted users. Each item can contains keys: 'user_names'(list name of RAM users), 'account_id'(the account id of ram users). If not set 'account_id', the default is the current account."
   type        = list(map(string))
   default     = []
 }
 
 variable "services" {
-  description = "List of the defined services used to play the ram role."
+  description = "List of the predefined and custom services used to play the ram role."
   type        = list(string)
   default     = []
 }
@@ -52,10 +58,7 @@ variable "force" {
 }
 
 variable "policies" {
-  description = "List of the policies that binds the role. Each item can include the following field:`policy_name`(the name of policy that binds the role), `policy_type`(the type of policy that binds the role)."
-  type = list(object({
-    policy_names = list(string)
-    policy_type  = string
-  }))
-  default = []
+  description = "List of the policies that binds the role. Each item can contains keys: 'policy_name'(the name of policy that used to bind the role), 'policy_type'(the type of ram policies, System or Custom, default to Custom.)."
+  type        = list(map(string))
+  default     = []
 }

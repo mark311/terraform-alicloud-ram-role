@@ -1,6 +1,6 @@
 module "ram_role" {
-  source = "../../"
-  name   = "test-role"
+  source    = "../../"
+  role_name = "test-role"
   users = [
     {
       user_names = join(",", ["user1", "user2"])
@@ -10,23 +10,22 @@ module "ram_role" {
       account_id = "123456789012****"
     }
   ]
-  services = ["ecs", "apigateway"]
+  services = ["ecs", "apigateway", "ecs-cn-hangzhou.aliyuncs.com"]
   force    = true
   policies = [
     # Binding a system policy.
     {
-      policy_names = ["AliyunVPCFullAccess", "AliyunKafkaFullAccess"]
+      policy_names = join(",", ["AliyunVPCFullAccess", "AliyunKafkaFullAccess"])
       policy_type  = "System"
     },
     # When binding custom policy, make sure this policy has been created.
     {
-      policy_names = ["VpcListTagResources", "RamPolicyForZhangsan"]
+      policy_names = "VpcListTagResources,RamPolicyForZhangsan"
       policy_type  = "Custom"
     },
     # Create policy and bind the ram role.
     {
-      policy_names = module.ram_policy.this_policy_name
-      policy_type  = "Custom"
+      policy_names = join(",", module.ram_policy.this_policy_name)
     }
   ]
 }

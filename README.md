@@ -1,15 +1,16 @@
-# terraform-alicloud-ram-role
-Terraform module which create RAM roles on Alibaba Cloud.
+Terraform module which create RAM roles on Alibaba Cloud.  
+terraform-alicloud-ram-role
 
 =====================================================================
 
 English | [简体中文](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/README-CN.md)
 
-Terraform module can create custom RAM roles on Alibaba Cloud.
+Terraform module used to create a RAM role on Alibaba Cloud, and attach several RAM policies for it. 
 
 These types of resources are supported:
 
 * [RAM role](https://www.terraform.io/docs/providers/alicloud/r/ram_role.html)
+* [RAM role attachment](https://www.terraform.io/docs/providers/alicloud/r/ram_role_attachment.html)
 
 ## Terraform versions
 
@@ -23,7 +24,6 @@ The Module requires Terraform 0.12.
 module "ram_role" {
   source = "terraform-alicloud-modules/ram-role/alicloud"
   name   = "test-role"
-  # If parameter `user` not set, current account number all ram users can play the role. 
   users = [
     # Add a trusted user under a specified account.
     {
@@ -35,7 +35,8 @@ module "ram_role" {
       user_names = join(",", ["user1", "user2"])
     }
   ]
-  services = ["ecs", "apigateway"]
+  # Setting predefined or custom services
+  services = ["ecs", "apigateway", "oss.aliyuncs.com", "ecs-cn-hangzhou.aliyuncs.com"]
   force    = true
   policies = [
     # Binding a system policy.
@@ -48,10 +49,9 @@ module "ram_role" {
       policy_names = ["VpcListTagResources", "RamPolicyForZhangsan"]
       policy_type  = "Custom"
     },
-    # Create policy and bind the ram role.
+    # Create Custom policy and bind the ram role.
     {
       policy_names = module.ram_policy.this_policy_name
-      policy_type  = "Custom"
     }
   ]
 }
@@ -79,7 +79,7 @@ module "ram_policy" {
 
 ## Examples
 
-* [ram-role example](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/tree/master/examples/ram-role)
+* [complete example](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/tree/master/examples/complete)
 
 Authors
 -------
