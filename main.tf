@@ -1,5 +1,8 @@
-data "alicloud_account" "this" {}
-resource "random_uuid" "this" {}
+data "alicloud_account" "this" {
+}
+
+resource "random_uuid" "this" {
+}
 
 #############################
 # ram_role
@@ -9,7 +12,6 @@ locals {
   attach_policy    = var.existing_role_name != "" || var.create ? true : false
   role_name        = var.role_name != "" ? var.role_name : substr("terraform-ram-role-${replace(random_uuid.this.result, "-", "")}", 0, 32)
   defined_services = distinct(flatten([for _, service in var.services : lookup(var.defined_services, service, [service])]))
-
   trusted_user_list = flatten(
     [
       for _, obj in var.users : [
@@ -42,7 +44,7 @@ resource "alicloud_ram_role" "this" {
 		  "Version": "1"
 		}
 	  EOF
-  description = "An Ram Role created by terraform-alicloud-modules/ram-role"
+  description = var.ram_role_description
   force       = var.force
 }
 

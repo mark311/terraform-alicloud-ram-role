@@ -21,6 +21,7 @@ variable "skip_region_validation" {
   default     = false
 }
 
+# ram_role
 variable "create" {
   description = "Whether to create ram role. If true, the 'users' or 'services' can not be empty."
   type        = bool
@@ -39,16 +40,22 @@ variable "existing_role_name" {
   default     = ""
 }
 
+variable "services" {
+  description = "List of the predefined and custom services used to play the ram role."
+  type        = list(string)
+  default     = []
+}
+
 variable "users" {
   description = "List of the trusted users. Each item can contains keys: 'user_names'(list name of RAM users), 'account_id'(the account id of ram users). If not set 'account_id', the default is the current account."
   type        = list(map(string))
   default     = []
 }
 
-variable "services" {
-  description = "List of the predefined and custom services used to play the ram role."
-  type        = list(string)
-  default     = []
+variable "ram_role_description" {
+  description = "Description of the RAM role."
+  type        = string
+  default     = ""
 }
 
 variable "force" {
@@ -57,6 +64,7 @@ variable "force" {
   default     = true
 }
 
+# ram_role_policy_attachment
 variable "policies" {
   description = "List of the policies that binds the role. Each item can contains keys: 'policy_name'(the name of policy that used to bind the role), 'policy_type'(the type of ram policies, System or Custom, default to Custom.)."
   type        = list(map(string))
