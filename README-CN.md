@@ -15,7 +15,7 @@ Terraform模块用于在阿里云上创建自定义RAM角色并为其绑定RAM P
 ```hcl
 module "ram_role" {
   source = "terraform-alicloud-modules/ram-role/alicloud"
-  name   = "test-role"
+  role_name   = "test-role"
   users = [
     # 添加可信用户
     {
@@ -33,17 +33,120 @@ module "ram_role" {
   policies = [
     # 绑定系统策略
     {
-      policy_names = ["AliyunVPCFullAccess","AliyunKafkaFullAccess"]
+      policy_names = join(",", ["AliyunVPCFullAccess","AliyunKafkaFullAccess"])
       policy_type  = "System"
     },
     # 绑定自定义策略
     {
-      policy_names = ["VpcListTagResources", "RamPolicyForZhangsan"]
+      policy_names = join(",", ["VpcListTagResources", "RamPolicyForZhangsan"])
       policy_type  = "Custom"
     },
     # 绑定自定义策略
     {
-      policy_names = module.ram_policy.this_policy_name
+      policy_names = join(",", module.ram_policy.this_policy_name)
+    }
+  ]
+}
+
+module "ram_policy" {
+  source = "terraform-alicloud-modules/ram-policy/alicloud"
+  policies = [
+    {
+      name            = "manage-slb-and-eip-resource"
+      defined_actions = join(",", ["slb-all", "vpc-all", "vswitch-all"])
+      actions         = join(",", ["vpc:AssociateEipAddress", "vpc:UnassociateEipAddress"])
+      resources       = join(",", ["acs:vpc:*:*:eip/eip-12345", "acs:slb:*:*:*"])
+    },
+    {
+      #actions is the action of custom specific resource.
+      #resources is the specific object authorized to customize.
+      actions   = join(",", ["ecs:ModifyInstanceAttribute", "vpc:ModifyVpc", "vswitch:ModifyVSwitch"])
+      resources = join(",", ["acs:ecs:*:*:instance/i-001", "acs:vpc:*:*:vpc/v-001", "acs:vpc:*:*:vswitch/vsw-001"])
+      effect    = "Deny"
+    }
+  ]
+}
+```
+
+#### 创建云服务级别的自定义角色，并为其授权相应的策略
+
+```hcl
+module "ram_role" {
+  source = "terraform-alicloud-modules/ram-role/alicloud"
+  role_name   = "test-role"
+  # Setting predefined or custom services
+  services = ["ecs", "apigateway", "oss.aliyuncs.com", "ecs-cn-hangzhou.aliyuncs.com"]
+  force    = true
+  policies = [
+    # Binding a system policy.
+    {
+      policy_names = join(",", ["AliyunVPCFullAccess","AliyunKafkaFullAccess"])
+      policy_type  = "System"
+    },
+    # When binding custom policy, make sure this policy has been created.
+    {
+      policy_names = join(",", ["VpcListTagResources", "RamPolicyForZhangsan"])
+      policy_type  = "Custom"
+    },
+    # Create Custom policy and bind the ram role.
+    {
+      policy_names = join(",", module.ram_policy.this_policy_name)
+    }
+  ]
+}
+
+module "ram_policy" {
+  source = "terraform-alicloud-modules/ram-policy/alicloud"
+  policies = [
+    {
+      name            = "manage-slb-and-eip-resource"
+      defined_actions = join(",", ["slb-all", "vpc-all", "vswitch-all"])
+      actions         = join(",", ["vpc:AssociateEipAddress", "vpc:UnassociateEipAddress"])
+      resources       = join(",", ["acs:vpc:*:*:eip/eip-12345", "acs:slb:*:*:*"])
+    },
+    {
+      #actions is the action of custom specific resource.
+      #resources is the specific object authorized to customize.
+      actions   = join(",", ["ecs:ModifyInstanceAttribute", "vpc:ModifyVpc", "vswitch:ModifyVSwitch"])
+      resources = join(",", ["acs:ecs:*:*:instance/i-001", "acs:vpc:*:*:vpc/v-001", "acs:vpc:*:*:vswitch/vsw-001"])
+      effect    = "Deny"
+    }
+  ]
+}
+```
+
+#### 创建云账号级别的自定义角色，并为其授权相应的策略
+
+```hcl
+module "ram_role" {
+  source = "terraform-alicloud-modules/ram-role/alicloud"
+  role_name   = "test-role"
+  users = [
+    # Add a trusted user under a specified account.
+    {
+      user_names = join(",", ["user3", "user4"])
+      account_id = "123456789012****"
+    },
+    # If not set `account_id`, the default is the current account.
+    {
+      user_names = join(",", ["user1", "user2"])
+    }
+  ]
+  force    = true
+  policies = [
+    # Binding a system policy.
+    {
+      policy_names = join(",", ["AliyunVPCFullAccess","AliyunKafkaFullAccess"])
+      policy_type  = "System"
+    },
+    # When binding custom policy, make sure this policy has been created.
+    {
+      policy_names = join(",", ["VpcListTagResources", "RamPolicyForZhangsan"])
+      policy_type  = "Custom"
+    },
+    # Create Custom policy and bind the ram role.
+    {
+      policy_names = join(",", module.ram_policy.this_policy_name)
     }
   ]
 }
@@ -108,7 +211,7 @@ provider "alicloud" {
 }
 module "ram_role" {
   source  = "terraform-alicloud-modules/ram-role/alicloud"
-  name    = "test-role"
+  role_name    = "test-role"
   force   = true
   // ...
 }
@@ -126,7 +229,7 @@ module "ram_role" {
   providers         = {
     alicloud = alicloud.sz
   }
-  name    = "test-role"
+  role_name    = "test-role"
   force   = true
   // ...
 }

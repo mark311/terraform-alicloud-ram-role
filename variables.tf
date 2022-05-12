@@ -47,7 +47,7 @@ variable "services" {
 }
 
 variable "users" {
-  description = "List of the trusted users. Each item can contains keys: 'user_names'(list name of RAM users), 'account_id'(the account id of ram users). If not set 'account_id', the default is the current account."
+  description = "List of the trusted users. Each item can contains keys: 'user_names'(list name of RAM users), 'account_id'(the account id of ram users). If not set 'account_id', the default is the current account. It will ignored when setting services."
   type        = list(map(string))
   default     = []
 }

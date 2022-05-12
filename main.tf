@@ -23,11 +23,11 @@ locals {
     ]
   )
   trusted_user   = flatten([for _, user in local.trusted_user_list : formatlist("acs:ram::${lookup(user, "account_id")}:user/%s", lookup(user, "user_name"))])
-  this_role_name = var.existing_role_name != "" ? var.existing_role_name : concat(alicloud_ram_role.this.*.name, [""])[0]
+  this_role_name = var.existing_role_name != "" ? var.existing_role_name : concat(alicloud_ram_role.this.*.name, concat(alicloud_ram_role.service.*.name, [""]))[0]
 }
 
 resource "alicloud_ram_role" "this" {
-  count       = local.create ? 1 : 0
+  count       = local.create && length(var.services) == 0 ? 1 : 0
   name        = local.role_name
   document    = <<EOF
 		{
@@ -36,8 +36,28 @@ resource "alicloud_ram_role" "this" {
 			  "Action": "sts:AssumeRole",
 			  "Effect": "Allow",
 			  "Principal": {
-				"Service": ${jsonencode(local.defined_services)},
                   "RAM":${jsonencode(length(var.users) != 0 ? local.trusted_user : ["acs:ram::${data.alicloud_account.this.id}:root"])}
+			  }
+			}
+		  ],
+		  "Version": "1"
+		}
+	  EOF
+  description = var.ram_role_description
+  force       = var.force
+}
+
+resource "alicloud_ram_role" "service" {
+  count       = local.create && length(var.services) != 0 ? 1 : 0
+  name        = local.role_name
+  document    = <<EOF
+		{
+		  "Statement": [
+			{
+			  "Action": "sts:AssumeRole",
+			  "Effect": "Allow",
+			  "Principal": {
+				"Service": ${jsonencode(local.defined_services)}
 			  }
 			}
 		  ],

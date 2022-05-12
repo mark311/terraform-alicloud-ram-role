@@ -12,12 +12,59 @@ These types of resources are supported:
 
 ## Usage
 
-#### Create policy using terraform default actions 
+#### Create ram role for alibaba cloud services and attach polices for it.
 
 ```hcl
 module "ram_role" {
   source = "terraform-alicloud-modules/ram-role/alicloud"
-  name   = "test-role"
+  role_name   = "test-role"
+  # Setting predefined or custom services
+  services = ["ecs", "apigateway", "oss.aliyuncs.com", "ecs-cn-hangzhou.aliyuncs.com"]
+  force    = true
+  policies = [
+    # Binding a system policy.
+    {
+      policy_names = join(",", ["AliyunVPCFullAccess","AliyunKafkaFullAccess"])
+      policy_type  = "System"
+    },
+    # When binding custom policy, make sure this policy has been created.
+    {
+      policy_names = join(",", ["VpcListTagResources", "RamPolicyForZhangsan"])
+      policy_type  = "Custom"
+    },
+    # Create Custom policy and bind the ram role.
+    {
+      policy_names = join(",", module.ram_policy.this_policy_name)
+    }
+  ]
+}
+
+module "ram_policy" {
+  source = "terraform-alicloud-modules/ram-policy/alicloud"
+  policies = [
+    {
+      name            = "manage-slb-and-eip-resource"
+      defined_actions = join(",", ["slb-all", "vpc-all", "vswitch-all"])
+      actions         = join(",", ["vpc:AssociateEipAddress", "vpc:UnassociateEipAddress"])
+      resources       = join(",", ["acs:vpc:*:*:eip/eip-12345", "acs:slb:*:*:*"])
+    },
+    {
+      #actions is the action of custom specific resource.
+      #resources is the specific object authorized to customize.
+      actions   = join(",", ["ecs:ModifyInstanceAttribute", "vpc:ModifyVpc", "vswitch:ModifyVSwitch"])
+      resources = join(",", ["acs:ecs:*:*:instance/i-001", "acs:vpc:*:*:vpc/v-001", "acs:vpc:*:*:vswitch/vsw-001"])
+      effect    = "Deny"
+    }
+  ]
+}
+```
+
+#### Create ram role for alibaba cloud accounts and attach polices for it.
+
+```hcl
+module "ram_role" {
+  source = "terraform-alicloud-modules/ram-role/alicloud"
+  role_name   = "test-role"
   users = [
     # Add a trusted user under a specified account.
     {
@@ -29,23 +76,21 @@ module "ram_role" {
       user_names = join(",", ["user1", "user2"])
     }
   ]
-  # Setting predefined or custom services
-  services = ["ecs", "apigateway", "oss.aliyuncs.com", "ecs-cn-hangzhou.aliyuncs.com"]
   force    = true
   policies = [
     # Binding a system policy.
     {
-      policy_names = ["AliyunVPCFullAccess","AliyunKafkaFullAccess"]
+      policy_names = join(",", ["AliyunVPCFullAccess","AliyunKafkaFullAccess"])
       policy_type  = "System"
     },
     # When binding custom policy, make sure this policy has been created.
     {
-      policy_names = ["VpcListTagResources", "RamPolicyForZhangsan"]
+      policy_names = join(",", ["VpcListTagResources", "RamPolicyForZhangsan"])
       policy_type  = "Custom"
     },
     # Create Custom policy and bind the ram role.
     {
-      policy_names = module.ram_policy.this_policy_name
+      policy_names = join(",", module.ram_policy.this_policy_name)
     }
   ]
 }
