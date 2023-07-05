@@ -8,7 +8,6 @@ resource "random_uuid" "this" {
 # ram_role
 #############################
 locals {
-  create           = var.existing_role_name != "" ? false : var.create
   attach_policy    = var.existing_role_name != "" || var.create ? true : false
   role_name        = var.role_name != "" ? var.role_name : substr("terraform-ram-role-${replace(random_uuid.this.result, "-", "")}", 0, 32)
   defined_services = distinct(flatten([for _, service in var.services : lookup(var.defined_services, service, [service])]))
@@ -27,7 +26,7 @@ locals {
 }
 
 resource "alicloud_ram_role" "this" {
-  count       = local.create && length(var.services) == 0 ? 1 : 0
+  count       = var.create && length(var.services) == 0 ? 1 : 0
   name        = local.role_name
   document    = <<EOF
 		{
@@ -48,7 +47,7 @@ resource "alicloud_ram_role" "this" {
 }
 
 resource "alicloud_ram_role" "service" {
-  count       = local.create && length(var.services) != 0 ? 1 : 0
+  count       = var.create && length(var.services) != 0 ? 1 : 0
   name        = local.role_name
   document    = <<EOF
 		{
@@ -85,7 +84,7 @@ locals {
 }
 
 resource "alicloud_ram_role_policy_attachment" "this" {
-  count = local.attach_policy ? length(local.policy_list) : 0
+  count = var.create ? length(local.policy_list) : 0
 
   role_name   = local.this_role_name
   policy_name = lookup(local.policy_list[count.index], "policy_name")

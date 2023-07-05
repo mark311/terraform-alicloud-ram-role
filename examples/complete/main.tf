@@ -1,8 +1,10 @@
 data "alicloud_account" "default" {
 }
+resource "random_uuid" "default" {
+}
 
 resource "alicloud_ram_user" "default" {
-  name  = "tf-testacc-user-20220312"
+  name  = "tfexample"
   force = var.force
 }
 
@@ -11,8 +13,7 @@ module "ram_role" {
 
   create = true
 
-  role_name = "tf-testacc-role-20220312"
-  services  = var.services
+  services = var.services
   users = [
     {
       user_names = alicloud_ram_user.default.name
@@ -46,12 +47,13 @@ module "ram_policy" {
   source = "terraform-alicloud-modules/ram-policy/alicloud"
   policies = [
     {
-      name            = "tf-testacc-policy-20220312"
+      name            = substr("terraform-ram-role-${replace(random_uuid.default.result, "-", "")}", 0, 32)
       defined_actions = join(",", ["slb-all", "vpc-all", "vswitch-all"])
       actions         = join(",", ["vpc:AssociateEipAddress", "vpc:UnassociateEipAddress"])
       resources       = join(",", ["acs:vpc:*:*:eip/eip-12345", "acs:slb:*:*:*"])
     },
     {
+      name      = substr("terraform-ram-role-deny-${replace(random_uuid.default.result, "-", "")}", 0, 32)
       actions   = join(",", ["ecs:ModifyInstanceAttribute", "vpc:ModifyVpc", "vswitch:ModifyVSwitch"])
       resources = join(",", ["acs:ecs:*:*:instance/i-001", "acs:vpc:*:*:vpc/v-001", "acs:vpc:*:*:vswitch/vsw-001"])
       effect    = "Deny"
