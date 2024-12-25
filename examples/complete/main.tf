@@ -8,6 +8,22 @@ resource "alicloud_ram_user" "default" {
   force = var.force
 }
 
+resource "alicloud_ram_policy" "custom-policy-1" {
+  policy_name     = "tfmod-ram-user-example-ram-group-custom-policy-1"
+  policy_document = <<EOF
+	{
+		"Version": "1",
+		"Statement": [
+		  {
+			"Action": "ecs:*",
+			"Resource": "*",
+			"Effect": "Allow"
+		  }
+		]
+	  }
+	EOF
+}
+
 module "ram_role" {
   source = "../.."
 
@@ -37,26 +53,8 @@ module "use_existing_role" {
       policy_type  = "System"
     },
     {
-      policy_names = join(",", module.ram_policy.this_policy_name)
+      policy_names = join(",", [alicloud_ram_policy.custom-policy-1.policy_name])
     }
   ]
 
-}
-
-module "ram_policy" {
-  source = "terraform-alicloud-modules/ram-policy/alicloud"
-  policies = [
-    {
-      name            = substr("terraform-ram-role-${replace(random_uuid.default.result, "-", "")}", 0, 32)
-      defined_actions = join(",", ["slb-all", "vpc-all", "vswitch-all"])
-      actions         = join(",", ["vpc:AssociateEipAddress", "vpc:UnassociateEipAddress"])
-      resources       = join(",", ["acs:vpc:*:*:eip/eip-12345", "acs:slb:*:*:*"])
-    },
-    {
-      name      = substr("terraform-ram-role-deny-${replace(random_uuid.default.result, "-", "")}", 0, 32)
-      actions   = join(",", ["ecs:ModifyInstanceAttribute", "vpc:ModifyVpc", "vswitch:ModifyVSwitch"])
-      resources = join(",", ["acs:ecs:*:*:instance/i-001", "acs:vpc:*:*:vpc/v-001", "acs:vpc:*:*:vswitch/vsw-001"])
-      effect    = "Deny"
-    }
-  ]
 }
