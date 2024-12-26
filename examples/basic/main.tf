@@ -1,3 +1,7 @@
+locals {
+  resource_name_prefix = "tfmod-ram-role-basic"
+}
+
 data "alicloud_account" "this" {
 }
 
@@ -5,8 +9,8 @@ module "ram-assumable-role-example" {
   source = "../.."
 
   create = true
-  role_name   = "tf-example-ram-assumable-role-basic"
-  ram_role_description = "tf-example-ram-assumable-role-basic"
+  role_name   = "${local.resource_name_prefix}-example"
+  ram_role_description = "${local.resource_name_prefix}-example"
 
   role_requires_mfa         = false
   attach_admin_policy       = true

@@ -1,13 +1,17 @@
 data "alicloud_account" "this" {
 }
 
+locals {
+  resource_name_prefix = "tfmod-ram-role-complete-new"
+}
+
 resource "random_integer" "default" {
   min = 10000
   max = 99999
 }
 
 resource "alicloud_ram_policy" "default" {
-  policy_name     = "tf-example-ram-assumable-role-complete-examplepolicy-${random_integer.default.result}"
+  policy_name     = "${local.resource_name_prefix}-examplepolicy-${random_integer.default.result}"
   policy_document = <<EOF
         {
                 "Version": "1",
@@ -26,8 +30,8 @@ module "ram-assumable-role-example" {
   source = "../.."
 
   create      = true
-  role_name   = "tf-example-ram-assumable-role-complete"
-  ram_role_description = "tf-example-ram-assumable-role-complete"
+  role_name   = "${local.resource_name_prefix}-example"
+  ram_role_description = "${local.resource_name_prefix}-example"
 
   max_session_duration      = 7200
   role_requires_mfa         = true

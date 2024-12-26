@@ -1,5 +1,10 @@
 data "alicloud_account" "default" {
 }
+
+locals {
+  resource_name_prefix = "tfmod-ram-role-complete"
+}
+
 resource "random_uuid" "default" {
 }
 
@@ -9,7 +14,7 @@ resource "alicloud_ram_user" "default" {
 }
 
 resource "alicloud_ram_policy" "custom-policy-1" {
-  policy_name     = "tfmod-ram-user-example-ram-group-custom-policy-1"
+  policy_name     = "${local.resource_name_prefix}-custom-policy-1"
   policy_document = <<EOF
 	{
 		"Version": "1",

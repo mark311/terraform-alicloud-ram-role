@@ -1,3 +1,7 @@
+locals {
+  resource_name_prefix = "tfmod-ram-role-roles"
+}
+
 ######################
 # ram assumable roles
 ######################
@@ -10,8 +14,8 @@ module "ram-assumable-roles-example" {
   create_admin_role          = true
   create_readonly_role       = true
 
-  admin_role_name            = "tf-example-ram-assumable-roles-basic-admin"
-  readonly_role_name         = "tf-example-ram-assumable-roles-basic-readonly"
+  admin_role_name            = "${local.resource_name_prefix}-example-admin"
+  readonly_role_name         = "${local.resource_name_prefix}-example-readonly"
 
   max_session_duration       = 7200
 

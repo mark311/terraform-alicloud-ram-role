@@ -13,6 +13,7 @@ data "alicloud_caller_identity" "current" {}
 
 locals {
   account_id          = data.alicloud_caller_identity.current.account_id
+  resource_name_prefix = "tfmod-ram-role-for-oidc"
 }
 
 ####################################################
@@ -20,7 +21,7 @@ locals {
 ####################################################
 module "ram-assumable-role-with-oidc-example" {
   source = "../../modules/role-for-oidc"
-  role_name = "tf-example-ram-assumable-role-with-oidc-basic"
+  role_name = "${local.resource_name_prefix}-example"
 
   create = true
 

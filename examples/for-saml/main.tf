@@ -13,6 +13,8 @@ data "alicloud_caller_identity" "current" {}
 
 locals {
   account_id          = data.alicloud_caller_identity.current.account_id
+  resource_name_prefix = "tfmod-ram-role-for-saml"
+
 }
 
 ####################################################
@@ -20,7 +22,7 @@ locals {
 ####################################################
 module "ram-assumable-role-with-saml-example" {
   source = "../../modules/role-for-saml"
-  role_name = "tf-example-ram-assumable-role-with-saml-basic"
+  role_name = "${local.resource_name_prefix}-example"
 
   create = true
 
