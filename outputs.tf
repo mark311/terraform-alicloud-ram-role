@@ -13,17 +13,22 @@ output "this_role_trusted_services" {
   value       = alicloud_ram_role.this.*.services
 }
 
-output "this_role_arn" {
+output "role_name" {
+  description = "Name of the ram role"
+  value       = local.this_role_name
+}
+
+output "role_arn" {
   description = "ARN of RAM role"
   value       = element(concat(alicloud_ram_role.this2.*.arn, [""]), 0)
 }
 
-output "this_role_id" {
+output "role_id" {
   description = "ID of RAM role"
   value       = element(concat(alicloud_ram_role.this2.*.role_id, [""]), 0)
 }
 
-output "this_role_requires_mfa" {
+output "role_requires_mfa" {
   description = "Whether RAM role requires MFA"
   value       = var.role_requires_mfa
 }

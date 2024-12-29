@@ -1,6 +1,6 @@
-output "this_role_name" {
+output "role_name" {
   description = "Name of the ram role"
-  value       = module.ram_role.this_role_name
+  value       = module.ram_role.role_name
 }
 
 output "this_role_trusted_users" {
