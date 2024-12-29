@@ -9,7 +9,7 @@ data "alicloud_account" "this" {
 }
 
 module "ram-assumable-roles-example" {
-  source = "../../modules/roles"
+  source = "../../modules/ram-roles"
 
   create_admin_role          = true
   create_readonly_role       = true

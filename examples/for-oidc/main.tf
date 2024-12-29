@@ -20,7 +20,7 @@ locals {
 # admin policy
 ####################################################
 module "ram-assumable-role-with-oidc-example" {
-  source = "../../modules/role-for-oidc"
+  source = "../../modules/ram-role-for-oidc"
   role_name = "${local.resource_name_prefix}-example"
 
   create = true

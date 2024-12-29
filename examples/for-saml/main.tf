@@ -21,7 +21,7 @@ locals {
 # basic usage
 ####################################################
 module "ram-assumable-role-with-saml-example" {
-  source = "../../modules/role-for-saml"
+  source = "../../modules/ram-role-for-saml"
   role_name = "${local.resource_name_prefix}-example"
 
   create = true
