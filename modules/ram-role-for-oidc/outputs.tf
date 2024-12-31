@@ -1,14 +1,14 @@
-output "ram_role_arn" {
+output "role_arn" {
   description = "ARN of RAM role"
   value       = try(alicloud_ram_role.this[0].arn, "")
 }
 
-output "ram_role_name" {
+output "role_name" {
   description = "Name of RAM role"
   value       = try(alicloud_ram_role.this[0].name, "")
 }
 
-output "ram_role_id" {
+output "role_id" {
   description = "ID of RAM role"
   value       = try(alicloud_ram_role.this[0].role_id, "")
 }
