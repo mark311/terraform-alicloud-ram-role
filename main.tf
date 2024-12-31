@@ -10,17 +10,17 @@ resource "random_uuid" "this" {
 locals {
   # assert that sets trust policy in correct way
   trust_style_1 = signum(length(var.users) + length(var.services))
-  trust_style_2 = signum(length(var.trusted_role_arns) + length(var.trusted_role_services))
-  trust_style_3 = signum(length(var.custom_role_trust_policy))
+  trust_style_2 = signum(length(var.trusted_principal_arns) + length(var.trusted_services))
+  trust_style_3 = signum(length(var.trust_policy))
   used_style_array = [local.trust_style_1, local.trust_style_2, local.trust_style_3]
   assert_atmost_one_style_used = sum(local.used_style_array) <= 1 ? true : file(
-    format("Error: using multiple styles to set trust policy, used styles is %v", local.used_style_array))
+    "Error: not allow to mix these 3 kinds of variables: 1) users, services; 2) trusted_principal_arns, trusted_services; 3) trust_policy")
   assert_atleast_one_style_used_or_existing_role = sum(local.used_style_array) > 0 || var.existing_role_name != "" ? true : file(
-    "Error: no trust policy set, use variables either 'trusted_principal_arns','trusted_services' or 'trust_policy' to set one")
+    "Error: no trust policy set, use variable trusted_principal_arns, trusted_services or trust_policy to set one")
 
   # assert that there's no variable 'existing_role_name' set when using trust_style_2 and trust_style_3
   assert_not_coexist_of_existing_role_name_and_trust_style_2_and_3 = (var.existing_role_name == "" || local.trust_style_2 + local.trust_style_3 == 0) ? true : file(
-    "Error: coexistence of variable 'existing_role_name' and style 2/3 of setting trust policy")
+    "Error: not allow to mix these 2 kinds of variables: 1) existing_role_name; 2) trusted_principal_arns, trusted_services, trust_policy")
 
   # control which roles to create
   create_role_this = length(var.users) > 0
@@ -123,9 +123,9 @@ locals {
   admin_role_policy_name      = "AdministratorAccess"
   readonly_role_policy_name   = "ReadOnlyAccess"
 
-  trusted_role_arns     = jsonencode(var.trusted_role_arns)
-  trusted_role_services = jsonencode(var.trusted_role_services)
-  mfa_age               = jsonencode(var.mfa_age)
+  trusted_principal_arns      = jsonencode(var.trusted_principal_arns)
+  trusted_services            = jsonencode(var.trusted_services)
+  mfa_age                     = jsonencode(var.mfa_age)
 
   assume_role_document = <<EOF
 		{
@@ -134,8 +134,8 @@ locals {
                     "Action": "sts:AssumeRole",
                     "Effect": "Allow",
                     "Principal": {
-                        "RAM": ${local.trusted_role_arns},
-                        "Service": ${local.trusted_role_services}
+                        "RAM": ${local.trusted_principal_arns},
+                        "Service": ${local.trusted_services}
                     }
                 }
             ],
@@ -150,8 +150,8 @@ locals {
                     "Action": "sts:AssumeRole",
                     "Effect": "Allow",
                     "Principal": {
-                        "RAM": ${local.trusted_role_arns},
-                        "Service": ${local.trusted_role_services}
+                        "RAM": ${local.trusted_principal_arns},
+                        "Service": ${local.trusted_services}
                     },
                     "Condition": {
                         "Bool": {
@@ -170,7 +170,7 @@ resource "alicloud_ram_role" "this2" {
 
   name        = local.role_name
   document    = coalesce(
-    var.custom_role_trust_policy,
+    var.trust_policy,
     (var.role_requires_mfa ? local.assume_role_with_mfa_document : local.assume_role_document))
   description = var.ram_role_description
   force       = var.force

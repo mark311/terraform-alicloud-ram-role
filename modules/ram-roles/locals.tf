@@ -4,8 +4,8 @@ locals {
   readonly_role_name  = var.readonly_role_name != "" ? var.readonly_role_name : substr("readonly-role-${replace(random_uuid.this.result, "-", "")}", 0, 32)
 
   action                = jsonencode(var.action)
-  trusted_role_arns     = jsonencode(var.trusted_role_arns)
-  trusted_role_services = jsonencode(var.trusted_role_services)
+  trusted_principal_arns = jsonencode(var.trusted_principal_arns)
+  trusted_services      = jsonencode(var.trusted_services)
   mfa_age               = jsonencode(var.mfa_age)
 
   assume_role_document = <<EOF
@@ -15,8 +15,8 @@ locals {
                     "Action": ${local.action},
                     "Effect": "Allow",
                     "Principal": {
-                        "RAM": ${local.trusted_role_arns},
-                        "Service": ${local.trusted_role_services}
+                        "RAM": ${local.trusted_principal_arns},
+                        "Service": ${local.trusted_services}
                     }
                 }
             ],
@@ -31,8 +31,8 @@ locals {
                     "Action": ${local.action},
                     "Effect": "Allow",
                     "Principal": {
-                        "RAM": ${local.trusted_role_arns},
-                        "Service": ${local.trusted_role_services}
+                        "RAM": ${local.trusted_principal_arns},
+                        "Service": ${local.trusted_services}
                     },
                     "Condition": {
                         "Bool": {

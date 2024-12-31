@@ -19,10 +19,10 @@ module "ram-assumable-roles-example" {
 
   max_session_duration       = 7200
 
-  trusted_role_arns = [
+  trusted_principal_arns = [
     "acs:ram::${data.alicloud_account.this.id}:root"
   ]
-  trusted_role_services = [
+  trusted_services = [
     "ecs.aliyuncs.com"
   ]
 }

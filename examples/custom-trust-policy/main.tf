@@ -12,7 +12,7 @@ module "ram-assumable-role-example" {
   role_requires_mfa         = false
   attach_admin_policy       = true
 
-  custom_role_trust_policy = <<EOF
+  trust_policy = <<EOF
   {
     "Statement": [
       {

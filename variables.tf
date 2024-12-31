@@ -41,13 +41,13 @@ variable "existing_role_name" {
 }
 
 variable "services" {
-  description = "(Deprecated, use variable 'trusted_role_services' instead) List of the predefined and custom services used to play the ram role."
+  description = "(Deprecated, use variable 'trusted_services' instead) List of the predefined and custom services used to play the ram role."
   type        = list(string)
   default     = []
 }
 
 variable "users" {
-  description = "(Deprecated, use variable 'trusted_role_arns' instead) List of the trusted users. Each item can contains keys: 'user_names'(list name of RAM users), 'account_id'(the account id of ram users). If not set 'account_id', the default is the current account. It will ignored when setting services."
+  description = "(Deprecated, use variable 'trusted_principal_arns' instead) List of the trusted users. Each item can contains keys: 'user_names'(list name of RAM users), 'account_id'(the account id of ram users). If not set 'account_id', the default is the current account. It will ignored when setting services."
   type        = list(map(string))
   default     = []
 }
@@ -89,20 +89,20 @@ variable "mfa_age" {
   default     = 86400
 }
 
-variable "trusted_role_arns" {
-  description = "ARNs of Alibaba Cloud entities who can assume these roles"
+variable "trusted_principal_arns" {
+  description = "ARNs of Alibaba Cloud entities who can assume these roles. Conflicts with 'trust_policy', 'users' and 'services'"
   type        = list(string)
   default     = []
 }
 
-variable "trusted_role_services" {
-  description = "Alibaba Cloud Services that can assume these roles"
+variable "trusted_services" {
+  description = "Alibaba Cloud Services that can assume these roles. Conflicts with 'trust_policy', 'users' and 'services'"
   type        = list(string)
   default     = []
 }
 
-variable "custom_role_trust_policy" {
-  description = "A custom role trust policy. Conflicts with 'trusted_role_arns' and 'trusted_role_services'"
+variable "trust_policy" {
+  description = "A custom role trust policy. Conflicts with 'trusted_principal_arns', 'trusted_services', 'users' and 'services'"
   type        = string
   default     = ""
 }

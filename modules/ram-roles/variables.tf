@@ -29,13 +29,13 @@ variable "action" {
   default     = "sts:AssumeRole"
 }
 
-variable "trusted_role_arns" {
+variable "trusted_principal_arns" {
   description = "ARNs of Alibaba Cloud entities who can assume these roles"
   type        = list(string)
   default     = []
 }
 
-variable "trusted_role_services" {
+variable "trusted_services" {
   description = "Alibaba Cloud Services that can assume these roles"
   type        = list(string)
   default     = []
