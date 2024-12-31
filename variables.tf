@@ -28,12 +28,6 @@ variable "create" {
   default     = true
 }
 
-variable "force_new_style" {
-  description = "Force to use new style of create role. New style using variables 'trusted_role_arns', 'trusted_role_services', 'managed_custom_policy_names', 'managed_system_policy_names' and etc. "
-  type        = bool
-  default     = false
-}
-
 variable "role_name" {
   description = "The name of role. If not set, a default name with prefix 'terraform-ram-role-' will be returned. "
   type        = string
