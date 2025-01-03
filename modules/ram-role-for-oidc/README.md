@@ -32,7 +32,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_alicloud_account_id"></a> [alicloud\_account\_id](#input\_alicloud\_account\_id) | The AliCloud account ID where the OIDC provider lives, leave empty to use the account for the AliCloud provider | `string` | `""` | no |
-| <a name="input_create_role"></a> [create\_role](#input\_create\_role) | Whether to create a role | `bool` | `false` | no |
+| <a name="input_create"></a> [create](#input\_create) | Whether to create a role | `bool` | `false` | no |
 | <a name="input_force"></a> [force](#input\_force) | This parameter is used for RAM role force destroy | `bool` | `false` | no |
 | <a name="input_managed_custom_policy_names"></a> [managed\_custom\_policy\_names](#input\_managed\_custom\_policy\_names) | List of names of managed policies of Custom type to attach to RAM user | `list(string)` | `[]` | no |
 | <a name="input_managed_system_policy_names"></a> [managed\_system\_policy\_names](#input\_managed\_system\_policy\_names) | List of names of managed policies of System type to attach to RAM user | `list(string)` | `[]` | no |
@@ -43,14 +43,14 @@ No modules.
 | <a name="input_provider_trust_policy_conditions"></a> [provider\_trust\_policy\_conditions](#input\_provider\_trust\_policy\_conditions) | [Condition constraints](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/data-sources/ram_policy_document#statement-condition) applied to the trust policy | `any` | `[]` | no |
 | <a name="input_provider_url"></a> [provider\_url](#input\_provider\_url) | URL of the OIDC Provider. Use provider\_urls to specify several URLs. | `string` | `""` | no |
 | <a name="input_provider_urls"></a> [provider\_urls](#input\_provider\_urls) | List of URLs of the OIDC Providers | `list(string)` | `[]` | no |
-| <a name="input_role_description"></a> [role\_description](#input\_role\_description) | IAM Role description | `string` | `""` | no |
+| <a name="input_ram_role_description"></a> [ram\_role\_description](#input\_ram\_role\_description) | IAM Role description | `string` | `""` | no |
 | <a name="input_role_name"></a> [role\_name](#input\_role\_name) | IAM role name | `string` | `null` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_ram_role_arn"></a> [ram\_role\_arn](#output\_ram\_role\_arn) | ARN of RAM role |
-| <a name="output_ram_role_id"></a> [ram\_role\_id](#output\_ram\_role\_id) | ID of RAM role |
-| <a name="output_ram_role_name"></a> [ram\_role\_name](#output\_ram\_role\_name) | Name of RAM role |
+| <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | ARN of RAM role |
+| <a name="output_role_id"></a> [role\_id](#output\_role\_id) | ID of RAM role |
+| <a name="output_role_name"></a> [role\_name](#output\_role\_name) | Name of RAM role |
 <!-- END_TF_DOCS -->

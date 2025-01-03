@@ -30,14 +30,13 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ram_assumable_role_basic"></a> [ram\_assumable\_role\_basic](#module\_ram\_assumable\_role\_basic) | ../../modules/ram-assumable-role | n/a |
+| <a name="module_ram-assumable-role-example"></a> [ram-assumable-role-example](#module\_ram-assumable-role-example) | ../.. | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
 | [alicloud_account.this](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/data-sources/account) | data source |
-| [alicloud_ram_policies.admin](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/data-sources/ram_policies) | data source |
 
 ## Inputs
 
@@ -47,8 +46,10 @@ No inputs.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_this_ram_role_arn"></a> [this\_ram\_role\_arn](#output\_this\_ram\_role\_arn) | ARN of RAM role |
-| <a name="output_this_ram_role_id"></a> [this\_ram\_role\_id](#output\_this\_ram\_role\_id) | ID of RAM role |
-| <a name="output_this_ram_role_name"></a> [this\_ram\_role\_name](#output\_this\_ram\_role\_name) | Name of RAM role |
-| <a name="output_this_role_requires_mfa"></a> [this\_role\_requires\_mfa](#output\_this\_role\_requires\_mfa) | Whether RAM role requires MFA |
+| <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | ARN of RAM role |
+| <a name="output_role_id"></a> [role\_id](#output\_role\_id) | ID of RAM role |
+| <a name="output_role_name"></a> [role\_name](#output\_role\_name) | Name of RAM role |
+| <a name="output_role_requires_mfa"></a> [role\_requires\_mfa](#output\_role\_requires\_mfa) | Whether RAM role requires MFA |
+| <a name="output_this_role_trusted_services"></a> [this\_role\_trusted\_services](#output\_this\_role\_trusted\_services) | (Deprecated) AliCloud services who can play this role. Works with variable 'services' |
+| <a name="output_this_role_trusted_users"></a> [this\_role\_trusted\_users](#output\_this\_role\_trusted\_users) | (Deprecated) RAM users who can play this role. Works with variable 'users' |
 <!-- END_TF_DOCS -->

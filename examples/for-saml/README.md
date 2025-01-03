@@ -33,7 +33,7 @@ Run `terraform destroy` when you don't need these resources.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ram-assumable-role-with-saml-example"></a> [ram-assumable-role-with-saml-example](#module\_ram-assumable-role-with-saml-example) | ../../modules/ram-assumable-role-with-saml | n/a |
+| <a name="module_ram-assumable-role-with-saml-example"></a> [ram-assumable-role-with-saml-example](#module\_ram-assumable-role-with-saml-example) | ../../modules/ram-role-for-saml | n/a |
 
 ## Resources
 
@@ -49,7 +49,7 @@ No inputs.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_ram_role_arn"></a> [ram\_role\_arn](#output\_ram\_role\_arn) | ARN of RAM role |
-| <a name="output_ram_role_id"></a> [ram\_role\_id](#output\_ram\_role\_id) | ID of RAM role |
-| <a name="output_ram_role_name"></a> [ram\_role\_name](#output\_ram\_role\_name) | Name of RAM role |
+| <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | ARN of RAM role |
+| <a name="output_role_id"></a> [role\_id](#output\_role\_id) | ID of RAM role |
+| <a name="output_role_name"></a> [role\_name](#output\_role\_name) | Name of RAM role |
 <!-- END_TF_DOCS -->

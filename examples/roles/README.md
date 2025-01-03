@@ -31,9 +31,7 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ram_assumable_roles"></a> [ram\_assumable\_roles](#module\_ram\_assumable\_roles) | ../../modules/ram-assumable-roles | n/a |
-| <a name="module_ram_assumable_roles_with_max_session_duration"></a> [ram\_assumable\_roles\_with\_max\_session\_duration](#module\_ram\_assumable\_roles\_with\_max\_session\_duration) | ../../modules/ram-assumable-roles | n/a |
-| <a name="module_ram_assumable_roles_with_none_role_created"></a> [ram\_assumable\_roles\_with\_none\_role\_created](#module\_ram\_assumable\_roles\_with\_none\_role\_created) | ../../modules/ram-assumable-roles | n/a |
+| <a name="module_ram-assumable-roles-example"></a> [ram-assumable-roles-example](#module\_ram-assumable-roles-example) | ../../modules/ram-roles | n/a |
 
 ## Resources
 
@@ -49,16 +47,16 @@ No inputs.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_this_admin_ram_role_arn"></a> [this\_admin\_ram\_role\_arn](#output\_this\_admin\_ram\_role\_arn) | ARN of admin RAM role |
-| <a name="output_this_admin_ram_role_id"></a> [this\_admin\_ram\_role\_id](#output\_this\_admin\_ram\_role\_id) | ID of admin RAM role |
-| <a name="output_this_admin_ram_role_name"></a> [this\_admin\_ram\_role\_name](#output\_this\_admin\_ram\_role\_name) | Name of admin RAM role |
-| <a name="output_this_admin_ram_role_requires_mfa"></a> [this\_admin\_ram\_role\_requires\_mfa](#output\_this\_admin\_ram\_role\_requires\_mfa) | Whether admin RAM role requires MFA |
-| <a name="output_this_poweruser_ram_role_arn"></a> [this\_poweruser\_ram\_role\_arn](#output\_this\_poweruser\_ram\_role\_arn) | ARN of poweruser RAM role |
-| <a name="output_this_poweruser_ram_role_id"></a> [this\_poweruser\_ram\_role\_id](#output\_this\_poweruser\_ram\_role\_id) | ID of poweruser RAM role |
-| <a name="output_this_poweruser_ram_role_name"></a> [this\_poweruser\_ram\_role\_name](#output\_this\_poweruser\_ram\_role\_name) | Name of admin RAM role |
-| <a name="output_this_poweruser_ram_role_requires_mfa"></a> [this\_poweruser\_ram\_role\_requires\_mfa](#output\_this\_poweruser\_ram\_role\_requires\_mfa) | Whether poweruser RAM role requires MFA |
-| <a name="output_this_readonly_ram_role_arn"></a> [this\_readonly\_ram\_role\_arn](#output\_this\_readonly\_ram\_role\_arn) | ARN of readonly RAM role |
-| <a name="output_this_readonly_ram_role_id"></a> [this\_readonly\_ram\_role\_id](#output\_this\_readonly\_ram\_role\_id) | ID of readonly RAM role |
-| <a name="output_this_readonly_ram_role_name"></a> [this\_readonly\_ram\_role\_name](#output\_this\_readonly\_ram\_role\_name) | Name of admin RAM role |
-| <a name="output_this_readonly_ram_role_requires_mfa"></a> [this\_readonly\_ram\_role\_requires\_mfa](#output\_this\_readonly\_ram\_role\_requires\_mfa) | Whether readonly RAM role requires MFA |
+| <a name="output_admin_role_arn"></a> [admin\_role\_arn](#output\_admin\_role\_arn) | ARN of admin RAM role |
+| <a name="output_admin_role_id"></a> [admin\_role\_id](#output\_admin\_role\_id) | ID of admin RAM role |
+| <a name="output_admin_role_name"></a> [admin\_role\_name](#output\_admin\_role\_name) | Name of admin RAM role |
+| <a name="output_admin_role_requires_mfa"></a> [admin\_role\_requires\_mfa](#output\_admin\_role\_requires\_mfa) | Whether admin RAM role requires MFA |
+| <a name="output_poweruser_role_arn"></a> [poweruser\_role\_arn](#output\_poweruser\_role\_arn) | ARN of poweruser RAM role |
+| <a name="output_poweruser_role_id"></a> [poweruser\_role\_id](#output\_poweruser\_role\_id) | ID of poweruser RAM role |
+| <a name="output_poweruser_role_name"></a> [poweruser\_role\_name](#output\_poweruser\_role\_name) | Name of admin RAM role |
+| <a name="output_poweruser_role_requires_mfa"></a> [poweruser\_role\_requires\_mfa](#output\_poweruser\_role\_requires\_mfa) | Whether poweruser RAM role requires MFA |
+| <a name="output_readonly_role_arn"></a> [readonly\_role\_arn](#output\_readonly\_role\_arn) | ARN of readonly RAM role |
+| <a name="output_readonly_role_id"></a> [readonly\_role\_id](#output\_readonly\_role\_id) | ID of readonly RAM role |
+| <a name="output_readonly_role_name"></a> [readonly\_role\_name](#output\_readonly\_role\_name) | Name of admin RAM role |
+| <a name="output_readonly_role_requires_mfa"></a> [readonly\_role\_requires\_mfa](#output\_readonly\_role\_requires\_mfa) | Whether readonly RAM role requires MFA |
 <!-- END_TF_DOCS -->
