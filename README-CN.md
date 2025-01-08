@@ -5,8 +5,6 @@ terraform-alicloud-ram-role
 
 ## 用法
 
-#### 创建允许云账号内所有RAM身份扮演的角色
-
 创建一个名为 test-role 的角色，授予其系统策略 AliyunOSSReadOnlyAccess ，信任账号 123456789012\*\*\*\* 内的所有RAM用户、RAM角色扮演。
 
 ```hcl
@@ -21,8 +19,6 @@ module "ram_role" {
   ]
 }
 ```
-
-#### 创建允许云账号内指定RAM身份扮演的角色
 
 创建一个名为 test-role 的角色，授予其系统策略 AliyunOSSReadOnlyAccess ，信任账号 123456789012\*\*\*\* 内的RAM用户user1、RAM角色role1 扮演。
 
@@ -40,8 +36,6 @@ module "ram_role" {
 }
 ```
 
-#### 创建允许云服务身份扮演的角色（服务角色Service Role）
-
 创建一个名为 test-role 的角色，授予其系统策略 AliyunOSSReadOnlyAccess ，信任 ecs.aliyuncs.com 云服务扮演。
 
 ```hcl
@@ -57,8 +51,6 @@ module "ram_role" {
 }
 ```
 
-#### 创建允许SAML身份提供商扮演的角色
-
 创建一个名为 test-role 的角色，授予其系统策略 AliyunOSSReadOnlyAccess ，信任 SAML 身份提供商 acs:ram::123456789012\*\*\*\*:saml-provider/test-provider 扮演。
 
 ```hcl
@@ -71,8 +63,6 @@ module "ram_role" {
   provider_id = "acs:ram::123456789012****:saml-provider/test-provider"
 }
 ```
-
-#### 创建信任OIDC身份提供商的角色
 
 创建一个名为 test-role 的角色，授予其系统策略 AliyunOSSReadOnlyAccess ，信任 SAML 身份提供商 acs:ram::123456789012\*\*\*\*:oidc-provider/test-provider 扮演
 
