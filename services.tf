@@ -1,5 +1,5 @@
 variable "defined_services" {
-  description = "Trusted physical user who can play ram_role"
+  description = "(Deprecated, use variable 'trusted_services' instead) Trusted physical user who can play ram_role"
   type        = map(list(string))
   default = {
     actiontrail   = ["actiontrail.aliyuncs.com"],
