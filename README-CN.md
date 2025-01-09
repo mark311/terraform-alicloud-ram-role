@@ -77,6 +77,17 @@ module "ram_role" {
 }
 ```
 
+## 模块
+
+* [ram-role-for-oidc 模块](./modules/ram-role-for-oidc)
+* [ram-role-for-saml 模块](./modules/ram-role-for-oidc)
+* [ram-roles 模块](./modules/ram-roles)
+
+## 示例
+
+* [basic 示例](./examples/basic)
+* [complete 示例](./examples/complete)
+
 ## 注意事项
 本Module从版本v1.1.0开始已经移除掉如下的 provider 的显式设置：
 
