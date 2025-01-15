@@ -2,7 +2,7 @@ locals {
   resource_name_prefix = "tfmod-ram-role-custom-trust-policy"
 }
 
-module "ram-assumable-role-example" {
+module "example" {
   source = "../.."
 
   create = true

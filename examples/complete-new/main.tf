@@ -26,7 +26,7 @@ resource "alicloud_ram_policy" "default" {
         EOF
 }
 
-module "ram-assumable-role-example" {
+module "example" {
   source = "../.."
 
   create      = true

@@ -8,7 +8,7 @@ locals {
 data "alicloud_account" "this" {
 }
 
-module "ram-assumable-roles-example" {
+module "example" {
   source = "../../modules/ram-roles"
 
   create_admin_role          = true

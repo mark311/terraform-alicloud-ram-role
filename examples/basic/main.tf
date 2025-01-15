@@ -5,7 +5,7 @@ locals {
 data "alicloud_account" "this" {
 }
 
-module "ram-assumable-role-example" {
+module "example" {
   source = "../.."
 
   create = true
