@@ -1,5 +1,3 @@
-data "alicloud_caller_identity" "current" {}
-
 locals {
   identifiers = compact(distinct(concat(var.provider_ids, [var.provider_id])))
 }

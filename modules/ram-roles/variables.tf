@@ -41,12 +41,6 @@ variable "trusted_services" {
   default     = []
 }
 
-variable "mfa_age" {
-  description = "Max age of valid MFA (in seconds) for roles which require MFA"
-  type        = number
-  default     = 86400
-}
-
 variable "ram_role_description" {
   description = "Description of the RAM role"
   type        = string

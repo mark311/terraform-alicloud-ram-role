@@ -27,7 +27,6 @@ locals {
   create_role_service = length(var.services) > 0
   create_role_this2 = local.trust_style_2 + local.trust_style_3 > 0
 
-  attach_policy    = var.existing_role_name != "" || var.create ? true : false
   role_name        = var.role_name != "" ? var.role_name : substr("terraform-ram-role-${replace(random_uuid.this.result, "-", "")}", 0, 32)
   defined_services = distinct(flatten([for _, service in var.services : lookup(var.defined_services, service, [service])]))
   trusted_user_list = flatten(
@@ -125,7 +124,6 @@ locals {
 
   trusted_principal_arns      = jsonencode(var.trusted_principal_arns)
   trusted_services            = jsonencode(var.trusted_services)
-  mfa_age                     = jsonencode(var.mfa_age)
 
   assume_role_document = <<EOF
 		{

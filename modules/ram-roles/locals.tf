@@ -6,7 +6,6 @@ locals {
   action                = jsonencode(var.action)
   trusted_principal_arns = jsonencode(var.trusted_principal_arns)
   trusted_services      = jsonencode(var.trusted_services)
-  mfa_age               = jsonencode(var.mfa_age)
 
   assume_role_document = <<EOF
 		{
