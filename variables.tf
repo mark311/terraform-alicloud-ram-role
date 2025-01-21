@@ -10,7 +10,7 @@ variable "role_name" {
   default     = ""
 }
 
-variable "ram_role_description" {
+variable "role_description" {
   description = "Description of the RAM role."
   type        = string
   default     = ""

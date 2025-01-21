@@ -7,7 +7,7 @@ resource "alicloud_ram_role" "admin" {
 
   name        = local.admin_role_name
   document    = var.admin_role_requires_mfa ? local.assume_role_with_mfa_document : local.assume_role_document
-  description = var.ram_role_description
+  description = var.role_description
   force       = var.force
 
   max_session_duration = var.max_session_duration
@@ -27,7 +27,7 @@ resource "alicloud_ram_role" "poweruser" {
 
   name        = local.poweruser_role_name
   document    = var.poweruser_role_requires_mfa ? local.assume_role_with_mfa_document : local.assume_role_document
-  description = var.ram_role_description
+  description = var.role_description
   force       = var.force
 
   max_session_duration = var.max_session_duration
@@ -47,7 +47,7 @@ resource "alicloud_ram_role" "readonly" {
 
   name        = local.readonly_role_name
   document    = var.readonly_role_requires_mfa ? local.assume_role_with_mfa_document : local.assume_role_document
-  description = var.ram_role_description
+  description = var.role_description
   force       = var.force
 
   max_session_duration = var.max_session_duration

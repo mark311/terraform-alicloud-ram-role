@@ -34,7 +34,7 @@ variable "force" {
   default     = false
 }
 
-variable "ram_role_description" {
+variable "role_description" {
   description = "IAM Role description"
   type        = string
   default     = ""

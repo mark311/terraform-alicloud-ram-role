@@ -31,7 +31,7 @@ module "example" {
 
   create      = true
   role_name   = "${local.resource_name_prefix}-example"
-  ram_role_description = "${local.resource_name_prefix}-example"
+  role_description = "${local.resource_name_prefix}-example"
 
   max_session_duration      = 7200
   role_requires_mfa         = true

@@ -41,7 +41,7 @@ variable "trusted_services" {
   default     = []
 }
 
-variable "ram_role_description" {
+variable "role_description" {
   description = "Description of the RAM role"
   type        = string
   default     = ""

@@ -21,7 +21,7 @@ resource "alicloud_ram_role" "this" {
 
   name                 = var.role_name
   max_session_duration = var.max_session_duration
-  description          = var.ram_role_description
+  description          = var.role_description
   force                = var.force
 
   document = data.alicloud_ram_policy_document.assume_role_with_saml[0].document

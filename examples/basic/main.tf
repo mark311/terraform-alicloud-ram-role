@@ -10,7 +10,7 @@ module "example" {
 
   create = true
   role_name   = "${local.resource_name_prefix}-example"
-  ram_role_description = "${local.resource_name_prefix}-example"
+  role_description = "${local.resource_name_prefix}-example"
 
   role_requires_mfa         = false
   attach_admin_policy       = true

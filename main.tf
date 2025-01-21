@@ -57,7 +57,7 @@ resource "alicloud_ram_role" "this" {
   document    = coalesce(
     var.trust_policy,
     (var.role_requires_mfa ? local.assume_role_with_mfa_document : local.assume_role_document))
-  description = var.ram_role_description
+  description = var.role_description
   force       = var.force
 
   max_session_duration = var.max_session_duration
