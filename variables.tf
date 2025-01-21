@@ -1,23 +1,23 @@
 variable "create" {
-  description = "Whether to create ram role. If true, the 'users' or 'services' can not be empty."
+  description = "Whether to create ram role. If true, the 'users' or 'services' can not be empty"
   type        = bool
   default     = true
 }
 
 variable "role_name" {
-  description = "The name of role. If not set, a default name with prefix 'terraform-ram-role-' will be returned. "
+  description = "The name of role. If not set, a default name with prefix 'terraform-ram-role-' will be returned"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "role_description" {
   description = "Description of the RAM role."
   type        = string
-  default     = ""
+  default     = "this role was created via terraform module ram-role."
 }
 
 variable "force" {
-  description = "Whether to delete ram policy forcibly, default to true."
+  description = "Whether to delete ram policy forcibly, default to true"
   type        = bool
   default     = true
 }
@@ -49,7 +49,7 @@ variable "trusted_services" {
 variable "trust_policy" {
   description = "A custom role trust policy. Conflicts with 'trusted_principal_arns' and 'trusted_services'"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "managed_custom_policy_names" {

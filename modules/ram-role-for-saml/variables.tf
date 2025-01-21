@@ -37,7 +37,7 @@ variable "force" {
 variable "role_description" {
   description = "RAM Role description"
   type        = string
-  default     = ""
+  default     = "this role was created via terraform module ram-role/modules/ram-role-for-saml."
 }
 
 variable "provider_id" {

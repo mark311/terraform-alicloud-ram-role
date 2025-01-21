@@ -5,7 +5,7 @@ resource "random_uuid" "this" {
 # ram_role
 #############################
 locals {
-  role_name                   = var.role_name != "" ? var.role_name : substr("terraform-ram-role-${replace(random_uuid.this.result, "-", "")}", 0, 32)
+  role_name                   = var.role_name != null ? var.role_name : substr("terraform-ram-role-${replace(random_uuid.this.result, "-", "")}", 0, 32)
   admin_role_policy_name      = "AdministratorAccess"
   readonly_role_policy_name   = "ReadOnlyAccess"
 

@@ -44,7 +44,7 @@ variable "trusted_services" {
 variable "role_description" {
   description = "Description of the RAM role"
   type        = string
-  default     = ""
+  default     = "this role was created via terraform module ram-role/modules/ram-roles."
 }
 
 variable "force" {
@@ -63,7 +63,7 @@ variable "create_admin_role" {
 variable "admin_role_name" {
   description = "RAM role with admin access. If not set, a default name with prefix `admin-role-` will be returned."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "admin_role_policy_names" {
@@ -82,7 +82,7 @@ variable "create_poweruser_role" {
 variable "poweruser_role_name" {
   description = "RAM role with poweruser access. If not set, a default name with prefix `poweruser-role-` will be returned."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "poweruser_role_policy_names" {
@@ -101,7 +101,7 @@ variable "create_readonly_role" {
 variable "readonly_role_name" {
   description = "RAM role with readonly access. If not set, a default name with prefix `readonly-role-` will be returned."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "readonly_role_policy_names" {

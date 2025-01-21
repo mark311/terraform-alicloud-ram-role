@@ -37,7 +37,7 @@ variable "force" {
 variable "role_description" {
   description = "IAM Role description"
   type        = string
-  default     = ""
+  default     = "this role was created via terraform module ram-role/modules/ram-role-for-oidc."
 }
 
 variable "provider_url" {
