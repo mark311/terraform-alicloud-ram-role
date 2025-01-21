@@ -1,14 +1,3 @@
-terraform {
-  required_version = ">= 1.0"
-
-  required_providers {
-    alicloud = {
-      source = "aliyun/alicloud"
-      version = ">= 1.220.0"
-    }
-  }
-}
-
 locals {
   resource_name_prefix = "tfmod-ram-role-for-oidc"
 }

@@ -10,24 +10,6 @@ variable "role_name" {
   default     = ""
 }
 
-variable "existing_role_name" {
-  description = "(Deprecated) The name of an existing RAM role. If set, 'create' will be ignored."
-  type        = string
-  default     = ""
-}
-
-variable "services" {
-  description = "(Deprecated, use variable 'trusted_services' instead) List of the predefined and custom services used to play the ram role."
-  type        = list(string)
-  default     = []
-}
-
-variable "users" {
-  description = "(Deprecated, use variable 'trusted_principal_arns' instead) List of the trusted users. Each item can contains keys: 'user_names'(list name of RAM users), 'account_id'(the account id of ram users). If not set 'account_id', the default is the current account. It will ignored when setting services."
-  type        = list(map(string))
-  default     = []
-}
-
 variable "ram_role_description" {
   description = "Description of the RAM role."
   type        = string
@@ -38,13 +20,6 @@ variable "force" {
   description = "Whether to delete ram policy forcibly, default to true."
   type        = bool
   default     = true
-}
-
-# ram_role_policy_attachment
-variable "policies" {
-  description = "(Deprecated, use variable 'managed_custom_policy_names' or 'managed_system_policy_names' instead) List of the policies that binds the role. Each item can contains keys: 'policy_name'(the name of policy that used to bind the role), 'policy_type'(the type of ram policies, System or Custom, default to Custom.)."
-  type        = list(map(string))
-  default     = []
 }
 
 variable "max_session_duration" {
@@ -60,19 +35,19 @@ variable "role_requires_mfa" {
 }
 
 variable "trusted_principal_arns" {
-  description = "ARNs of Alibaba Cloud entities who can assume these roles. Conflicts with 'trust_policy', 'users' and 'services'"
+  description = "ARNs of Alibaba Cloud entities who can assume these roles. Conflicts with 'trust_policy'"
   type        = list(string)
   default     = []
 }
 
 variable "trusted_services" {
-  description = "Alibaba Cloud Services that can assume these roles. Conflicts with 'trust_policy', 'users' and 'services'"
+  description = "Alibaba Cloud Services that can assume these roles. Conflicts with 'trust_policy'"
   type        = list(string)
   default     = []
 }
 
 variable "trust_policy" {
-  description = "A custom role trust policy. Conflicts with 'trusted_principal_arns', 'trusted_services', 'users' and 'services'"
+  description = "A custom role trust policy. Conflicts with 'trusted_principal_arns' and 'trusted_services'"
   type        = string
   default     = ""
 }
@@ -99,49 +74,4 @@ variable "attach_readonly_policy" {
   description = "Whether to attach a readonly policy to a role"
   type        = bool
   default     = false
-}
-
-variable "defined_services" {
-  description = "(Deprecated, use variable 'trusted_services' instead) Trusted physical user who can play ram_role"
-  type        = map(list(string))
-  default = {
-    actiontrail   = ["actiontrail.aliyuncs.com"],
-    adb           = ["adb.aliyuncs.com"],
-    alikafka      = ["alikafka.aliyuncs.com"],
-    appms         = ["appms.aliyuncs.com"],
-    arms          = ["arms.aliyuncs.com"],
-    apigateway    = ["apigateway.aliyuncs.com"],
-    baas          = ["baas.aliyuncs.com"],
-    business      = ["business.aliyuncs.com"],
-    ccc           = ["ccc.aliyuncs.com"],
-    cloudpush     = ["cloudpush.aliyuncs.com"],
-    cusanalytic   = ["cusanalytic.aliyuncs.com"],
-    dns           = ["dns.aliyuncs.com"],
-    dcdn          = ["dcdn.aliyuncs.com"],
-    ddosbgp       = ["ddosbgp.aliyuncs.com"],
-    drds          = ["drds.aliyuncs.com"],
-    ecs           = ["ecs.aliyuncs.com"],
-    elasticsearch = ["elasticsearch.aliyuncs.com"],
-    ess           = ["ess.aliyuncs.com"],
-    emr           = ["emr.aliyuncs.com"],
-    foas          = ["foas.aliyuncs.com"],
-    green         = ["green.aliyuncs.com"],
-    hbase         = ["hbase.aliyuncs.com"],
-    iot           = ["iot.aliyuncs.com"],
-    live          = ["live.aliyuncs.com"],
-    mongodb       = ["mongodb.aliyuncs.com"],
-    market        = ["market.aliyuncs.com"],
-    maxcompute    = ["maxcompute.aliyuncs.com"],
-    ons           = ["ons.aliyuncs.com"],
-    polardb       = ["polardb.aliyuncs.com"],
-    qualitycheck  = ["qualitycheck.aliyuncs.com"],
-    r-kvstore     = ["r-kvstore.aliyuncs.com"],
-    rds           = ["rds.aliyuncs.com"],
-    reid          = ["reid.aliyuncs.com"],
-    scdn          = ["scdn.aliyuncs.com"],
-    slb           = ["slb.aliyuncs.com"],
-    vod           = ["vod.aliyuncs.com"],
-    vpc           = ["vpc.aliyuncs.com"],
-    webplus       = ["webplus.aliyuncs.com"]
-  }
 }

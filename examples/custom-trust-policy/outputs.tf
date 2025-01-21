@@ -3,16 +3,6 @@ output "role_name" {
   value       = module.example.role_name
 }
 
-output "this_role_trusted_users" {
-  description = "(Deprecated) RAM users who can play this role. Works with variable 'users'"
-  value       = module.example.this_role_trusted_users
-}
-
-output "this_role_trusted_services" {
-  description = "(Deprecated) AliCloud services who can play this role. Works with variable 'services'"
-  value       = module.example.this_role_trusted_services
-}
-
 output "role_arn" {
   description = "ARN of RAM role"
   value       = module.example.role_arn
