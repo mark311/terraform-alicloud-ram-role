@@ -1,10 +1,11 @@
+########################
+# 当前 Module 的版本约束。alicloud 的 source 必须为 "hashicorp/alicloud"
+########################
 terraform {
-  required_version = ">= 1.0"
-
+  required_version = ">= 0.13"
   required_providers {
     alicloud = {
-      source = "aliyun/alicloud"
-      version = ">= 1.220.0"
+      source = "hashicorp/alicloud"
     }
   }
 }
