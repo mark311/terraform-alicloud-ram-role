@@ -100,3 +100,48 @@ variable "attach_readonly_policy" {
   type        = bool
   default     = false
 }
+
+variable "defined_services" {
+  description = "(Deprecated, use variable 'trusted_services' instead) Trusted physical user who can play ram_role"
+  type        = map(list(string))
+  default = {
+    actiontrail   = ["actiontrail.aliyuncs.com"],
+    adb           = ["adb.aliyuncs.com"],
+    alikafka      = ["alikafka.aliyuncs.com"],
+    appms         = ["appms.aliyuncs.com"],
+    arms          = ["arms.aliyuncs.com"],
+    apigateway    = ["apigateway.aliyuncs.com"],
+    baas          = ["baas.aliyuncs.com"],
+    business      = ["business.aliyuncs.com"],
+    ccc           = ["ccc.aliyuncs.com"],
+    cloudpush     = ["cloudpush.aliyuncs.com"],
+    cusanalytic   = ["cusanalytic.aliyuncs.com"],
+    dns           = ["dns.aliyuncs.com"],
+    dcdn          = ["dcdn.aliyuncs.com"],
+    ddosbgp       = ["ddosbgp.aliyuncs.com"],
+    drds          = ["drds.aliyuncs.com"],
+    ecs           = ["ecs.aliyuncs.com"],
+    elasticsearch = ["elasticsearch.aliyuncs.com"],
+    ess           = ["ess.aliyuncs.com"],
+    emr           = ["emr.aliyuncs.com"],
+    foas          = ["foas.aliyuncs.com"],
+    green         = ["green.aliyuncs.com"],
+    hbase         = ["hbase.aliyuncs.com"],
+    iot           = ["iot.aliyuncs.com"],
+    live          = ["live.aliyuncs.com"],
+    mongodb       = ["mongodb.aliyuncs.com"],
+    market        = ["market.aliyuncs.com"],
+    maxcompute    = ["maxcompute.aliyuncs.com"],
+    ons           = ["ons.aliyuncs.com"],
+    polardb       = ["polardb.aliyuncs.com"],
+    qualitycheck  = ["qualitycheck.aliyuncs.com"],
+    r-kvstore     = ["r-kvstore.aliyuncs.com"],
+    rds           = ["rds.aliyuncs.com"],
+    reid          = ["reid.aliyuncs.com"],
+    scdn          = ["scdn.aliyuncs.com"],
+    slb           = ["slb.aliyuncs.com"],
+    vod           = ["vod.aliyuncs.com"],
+    vpc           = ["vpc.aliyuncs.com"],
+    webplus       = ["webplus.aliyuncs.com"]
+  }
+}
