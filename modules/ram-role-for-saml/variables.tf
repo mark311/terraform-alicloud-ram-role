@@ -43,7 +43,7 @@ variable "role_description" {
 variable "provider_id" {
   description = "ID of the SAML Provider. Use provider_ids to specify several IDs."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "provider_ids" {

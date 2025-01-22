@@ -43,7 +43,7 @@ variable "role_description" {
 variable "provider_url" {
   description = "URL of the OIDC Provider. Use provider_urls to specify several URLs."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "provider_urls" {
@@ -55,7 +55,7 @@ variable "provider_urls" {
 variable "alicloud_account_id" {
   description = "The AliCloud account ID where the OIDC provider lives, leave empty to use the account for the AliCloud provider"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "oidc_fully_qualified_subjects" {

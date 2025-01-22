@@ -1,10 +1,10 @@
 data "alicloud_caller_identity" "current" {}
 
 locals {
-  alicloud_account_id = var.alicloud_account_id != "" ? var.alicloud_account_id : data.alicloud_caller_identity.current.account_id
+  alicloud_account_id = var.alicloud_account_id != null ? var.alicloud_account_id : data.alicloud_caller_identity.current.account_id
   # clean URLs of https:// prefix
   urls = [
-    for url in compact(distinct(concat(var.provider_urls, [var.provider_url]))) :
+    for url in compact(distinct(concat(var.provider_urls, var.provider_url != null ? [var.provider_url] : []))) :
     replace(url, "https://", "")
   ]
 }

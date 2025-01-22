@@ -1,5 +1,5 @@
 locals {
-  identifiers = compact(distinct(concat(var.provider_ids, [var.provider_id])))
+  identifiers = compact(distinct(concat(var.provider_ids, var.provider_id != null ? [var.provider_id] : [])))
 }
 
 data "alicloud_ram_policy_document" "assume_role_with_saml" {
