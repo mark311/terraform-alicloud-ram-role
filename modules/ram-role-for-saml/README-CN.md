@@ -79,9 +79,9 @@ module "ram-role-for-saml-example" {
 
 登陆RAM控制台可以查看他们。
 
-![](imgs/1738743320027-14f0c06e-bda8-471c-ba45-d438c2a84443.png)
+![](imgs/2.jgp)
 
-![](imgs/1738744784087-f252b136-5031-43a4-b3e7-a54c91aefbf4.png)
+![](imgs/3.jpg)
 
 
 # SSO登陆到阿里云
