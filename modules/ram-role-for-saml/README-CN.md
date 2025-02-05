@@ -25,7 +25,7 @@ ram-role-for-saml
 
 配置好后，从IDaaS控制台中下载IdP元数据文件，它是一个XML文档，后面会用它替换掉 Terraform 代码中对应的XML样例。
 
-![](https://intranetproxy.alipay.com/skylark/lark/0/2025/png/33100/1738742010193-067b75cd-695b-41eb-aa4b-702d6e933723.png)
+![](imgs/1.jpg)
 
 # 配置RAM （terraform方式）
 接下来，我们使用Terraform创建SAML身份提供商与RAM角色。
@@ -89,11 +89,11 @@ module "ram-role-for-saml-example" {
 
 登陆后，点击刚刚配置“阿里云角色SSO”应用，便可以跳转到阿里云控制台，登陆的身份即是我们使用Terraform创建的RAM角色。
 
-![](imgs/1738743449502-0b95ab7a-75bd-4c76-a719-ec8753511e98.png)
+![](imgs/4.jpg)
 
-![](imgs/1738743406188-04e5043c-4c91-4082-8be0-d38945c7042a.png)
+![](imgs/5.jpg)
 
-![](imgs/1738744737289-0d1feb5d-573b-4d32-aa4e-5ab72262780f.png)
+![](imgs/6.jpg)
 
 
 <!-- 在根目录下运行命令 `terraform-docs markdown . --output-file "./README.md"`，可将所有信息自动填充 -->
