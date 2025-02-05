@@ -1,3 +1,98 @@
+ram-role-for-saml
+=================
+
+Alibaba Cloud's Resource Access Management (RAM) supports [SAML Role SSO Integration](https://help.aliyun.com/zh/ram/user-guide/overview) with external identity providers. You can now efficiently create RAM resources related to SAML SSO integration using a Terraform Module.
+
+## Usage
+This section demonstrates how to use the Terraform Module to configure RAM for SSO integration with Alibaba Cloud's IDaaS as an external identity provider.
+
+### Prerequisites
+Before starting, you'll need to prepare the following names, which will be used when configuring both IDaaS and RAM roles:
+
+1. SAML Identity Provider Name, e.g., test-idaas-saml-provider
+2. RAM Role Name, e.g., test-role-for-idaas
+
+### Configuring IDaaS
+First, create an IDaaS instance and account by referring to the official IDaaS documentation:
+
++ [IDaaS - Create a Free Instance](https://help.aliyun.com/zh/idaas/eiam/getting-started/create-an-instance-for-free)
++ [IDaaS - Create an Account](https://help.aliyun.com/zh/idaas/eiam/getting-started/create-an-account)
+
+Then, create an "Alibaba Cloud Role SSO" application by referring to the [Creating an "Alibaba Cloud Role SSO" Application](https://help.aliyun.com/zh/idaas/eiam/user-guide/alibaba-cloud-role-based-sso) documentation. Note:
+
+1. Only configure IDaaS resources; do not configure RAM-related resources. RAM resources will be created using Terraform. The documentation is divided into five sections; complete only the first two: "Create Application" and "Configure Application SSO".
+2. Be sure to use the SAML Identity Provider Name and RAM Role Name prepared earlier.
+
+Once configured, download the IdP metadata file from the IDaaS console, which is an XML document. You will use this later to replace the corresponding XML example in the Terraform code.
+
+![](imgs/1.jpg)
+
+### Configuring RAM (via Terraform)
+Next, we will use Terraform to create the SAML Identity Provider and RAM Role.
+
+First, configure the Terraform execution environment. Detailed steps can be found in Alibaba Cloud's documentation: [Getting Started with Terraform](https://help.aliyun.com/zh/terraform/getting-started-with-terraform).
+
+After setting up the Terraform environment, add the following Terraform code to your project. The value of encodedsaml_metadata_document needs to be corrected, as described later. Ensure that the saml_provider_name and role_name match the names prepared earlier and are not changed arbitrarily.
+
+Execute the `terraform apply` command to create the SAML Identity Provider and RAM Role.
+
+```hcl
+# Create SAML Identity Provider
+resource "alicloud_ram_saml_provider" "test-saml-provider" {
+  description                   = "saml provider for test."
+
+  # SAML Identity Provider Name, must match the name used in IDaaS
+  saml_provider_name            = "test-idaas-saml-provider"
+
+  # IDaaS SAML IdP metadata XML document content
+  encodedsaml_metadata_document = base64encode(<<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+                     ID="SIMPCp1J9vJt142Dvg5AT2Efcn9JumMe7fau"
+                     entityID="https://574b3zcn.aliyunidaas.com/api/v2/app_m6rpawvpeqcjluw7dvyhp37gzu/saml2/meta"
+                     validUntil="2125-02-05T05:00:10.578Z">
+...
+...
+...
+
+</md:EntityDescriptor>
+EOF
+    )
+}
+
+# Create RAM Role
+module "ram-role-for-saml-example" {
+  source = "../../modules/ram-role-for-saml"
+
+  provider_id = alicloud_ram_saml_provider.test-saml-provider.arn
+
+  # Role Name, must match the application account name bound to the IDaaS account
+  role_name = "test-role-for-idaas"
+
+  # Policies granted to the role
+  managed_system_policy_names = ["AliyunRAMReadOnlyAccess"]
+}
+
+```
+
+You can view them in the RAM Console.
+
+![](imgs/2.jgp)
+
+![](imgs/3.jpg)
+
+### SSO Login to Alibaba Cloud
+Log in with the IDaaS user created earlier. If you don't know how to log in, refer to the IDaaS documentation [IDaaS - First Time Single Sign-On](https://help.aliyun.com/zh/idaas/eiam/getting-started/logon-and-sso).
+
+After logging in, click on the "Alibaba Cloud Role SSO" application you just configured to access the Alibaba Cloud Console, where your identity will be the RAM role we created using Terraform.
+
+![](imgs/4.jpg)
+
+![](imgs/5.jpg)
+
+![](imgs/6.jpg)
+
+
 <!-- 在根目录下运行命令 `terraform-docs markdown . --output-file "./README.md"`，可将所有信息自动填充 -->
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

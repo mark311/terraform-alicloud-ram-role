@@ -52,6 +52,7 @@ module "ram_role" {
 ```
 
 创建一个名为 test-role 的角色，授予其系统策略 AliyunOSSReadOnlyAccess ，信任 SAML 身份提供商 acs:ram::123456789012\*\*\*\*:saml-provider/test-provider 扮演。
+查看模块 [ram-role-for-saml](./modules/ram-role-for-oidc) 的 README 文档获得更详细的用法指引。
 
 ```hcl
 module "ram_role" {
@@ -64,7 +65,7 @@ module "ram_role" {
 }
 ```
 
-创建一个名为 test-role 的角色，授予其系统策略 AliyunOSSReadOnlyAccess ，信任 SAML 身份提供商 acs:ram::123456789012\*\*\*\*:oidc-provider/test-provider 扮演
+创建一个名为 test-role 的角色，授予其系统策略 AliyunOSSReadOnlyAccess ，信任 OIDC 身份提供商 acs:ram::123456789012\*\*\*\*:oidc-provider/test-provider 扮演
 
 ```hcl
 module "ram_role" {
