@@ -7,7 +7,7 @@ variable "max_session_duration" {
 variable "create" {
   description = "Whether to create a role"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "role_name" {

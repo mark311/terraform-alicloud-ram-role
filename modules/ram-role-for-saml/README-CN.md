@@ -64,7 +64,6 @@ EOF
 # 创建RAM角色
 module "ram-role-for-saml-example" {
   source = "../../modules/ram-role-for-saml"
-  create = true
 
   provider_id = alicloud_ram_saml_provider.test-saml-provider.arn
 

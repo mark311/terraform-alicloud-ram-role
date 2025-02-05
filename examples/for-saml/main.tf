@@ -49,8 +49,6 @@ module "example" {
   source = "../../modules/ram-role-for-saml"
   role_name = "${local.resource_name_prefix}-example"
 
-  create = true
-
   provider_id = alicloud_ram_saml_provider.provider1.arn
   provider_ids = [
     alicloud_ram_saml_provider.provider2.arn,

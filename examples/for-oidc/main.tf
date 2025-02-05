@@ -9,8 +9,6 @@ module "example" {
   source = "../../modules/ram-role-for-oidc"
   role_name = "${local.resource_name_prefix}-example"
 
-  create = true
-
   provider_url = "oidc.circleci.com/org/CIRCLECI_ORG_UUID"
 
   oidc_fully_qualified_audiences = ["CIRCLECI_ORG_UUID"]
