@@ -6,13 +6,13 @@ ram-role-for-saml
 ## 用法
 本小节将以阿里云的IDaaS作为外部身份提供商，演示如何使用Terraform Module来配置RAM，使之与IDaaS的身份进行SSO集成。
 
-# 准备工作
+### 准备工作
 在开始前，我们需要先准备好以下名称，在配置IDaaS和RAM角色时均需要用到：
 
 1. SAML身份提供商名称，比如：test-idaas-saml-provider
 2. RAM角色名称，比如：test-role-for-idaas
 
-# 配置IDaaS
+### 配置IDaaS
 首先，创建IDaaS实例与账户，参考IDaaS官网文档：
 
 + [IDaaS - 免费开通实例](https://help.aliyun.com/zh/idaas/eiam/getting-started/create-an-instance-for-free)
@@ -27,7 +27,7 @@ ram-role-for-saml
 
 ![](imgs/1.jpg)
 
-# 配置RAM （terraform方式）
+### 配置RAM (terraform方式)
 接下来，我们使用Terraform创建SAML身份提供商与RAM角色。
 
 我们首先需要配置好Terraform的执行环境，具体操作方法可以参考阿里云官网文档：[Terraform 使用入门](https://help.aliyun.com/zh/terraform/getting-started-with-terraform)。
@@ -83,7 +83,7 @@ module "ram-role-for-saml-example" {
 ![](imgs/3.jpg)
 
 
-# SSO登陆到阿里云
+### SSO登陆到阿里云
 用前面创建的IDaaS用户登陆，如果不知道如何登陆，可以参考 IDaaS官网文档 [IDaaS - 首次单点登录](https://help.aliyun.com/zh/idaas/eiam/getting-started/logon-and-sso)
 
 登陆后，点击刚刚配置“阿里云角色SSO”应用，便可以跳转到阿里云控制台，登陆的身份即是我们使用Terraform创建的RAM角色。
