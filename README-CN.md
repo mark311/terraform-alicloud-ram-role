@@ -52,7 +52,7 @@ module "ram_role" {
 ```
 
 创建一个名为 test-role 的角色，授予其系统策略 AliyunOSSReadOnlyAccess ，信任 SAML 身份提供商 acs:ram::123456789012\*\*\*\*:saml-provider/test-provider 扮演。
-查看模块 [ram-role-for-saml](./modules/ram-role-for-oidc) 的 README 文档获得更详细的用法指引。
+查看模块 [ram-role-for-saml](./modules/ram-role-for-saml) 的 README 文档获得更详细的用法指引。
 
 ```hcl
 module "ram_role" {
@@ -65,24 +65,9 @@ module "ram_role" {
 }
 ```
 
-创建一个名为 test-role 的角色，授予其系统策略 AliyunOSSReadOnlyAccess ，信任 OIDC 身份提供商 acs:ram::123456789012\*\*\*\*:oidc-provider/test-provider 扮演
-
-```hcl
-module "ram_role" {
-  source = "terraform-alicloud-modules/ram-role/alicloud"
-  role_name = "test-role"
-  managed_system_policy_names = [
-    "AliyunOSSReadOnlyAccess"
-  ]
-  provider_url = "https://dev-xxxxxx.okta.com"
-}
-```
-
 ## 模块
 
-* [ram-role-for-oidc](./modules/ram-role-for-oidc)
-* [ram-role-for-saml](./modules/ram-role-for-oidc)
-* [ram-roles](./modules/ram-roles)
+* [ram-role-for-saml](./modules/ram-role-for-saml)
 
 ## 示例
 
@@ -90,9 +75,7 @@ module "ram_role" {
 * [complete](./examples/complete)
 * [complete-new](./examples/complete-new)
 * [custom-trust-policy](./examples/custom-trust-policy)
-* [for-oidc](./examples/for-oidc)
 * [for-saml](./examples/for-saml)
-* [roles](./examples/roles)
 
 
 ## 注意事项
