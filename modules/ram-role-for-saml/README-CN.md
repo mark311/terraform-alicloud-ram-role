@@ -25,7 +25,7 @@ ram-role-for-saml
 
 配置好后，从IDaaS控制台中下载IdP元数据文件，它是一个XML文档，后面会用它替换掉 Terraform 代码中对应的XML样例。
 
-![](imgs/1.jpg)
+![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/zh_1.jpg)
 
 ### 配置RAM (terraform方式)
 接下来，我们使用Terraform创建SAML身份提供商与RAM角色。
@@ -78,9 +78,9 @@ module "ram-role-for-saml-example" {
 
 登陆RAM控制台可以查看他们。
 
-![](imgs/2.jgp)
+![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/zh_2.jpg)
 
-![](imgs/3.jpg)
+![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/zh_3.jpg)
 
 
 ### SSO登陆到阿里云
@@ -88,11 +88,11 @@ module "ram-role-for-saml-example" {
 
 登陆后，点击刚刚配置“阿里云角色SSO”应用，便可以跳转到阿里云控制台，登陆的身份即是我们使用Terraform创建的RAM角色。
 
-![](imgs/4.jpg)
+![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/zh_4.jpg)
 
-![](imgs/5.jpg)
+![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/zh_5.jpg)
 
-![](imgs/6.jpg)
+![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/zh_6.jpg)
 
 
 <!-- 在根目录下运行命令 `terraform-docs markdown . --output-file "./README.md"`，可将所有信息自动填充 -->

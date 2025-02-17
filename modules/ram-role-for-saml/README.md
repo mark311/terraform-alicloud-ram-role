@@ -1,4 +1,7 @@
 ram-role-for-saml
+
+English | [简体中文](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/modules/ram-role-for-saml/README-CN.md)
+
 =================
 
 Alibaba Cloud's Resource Access Management (RAM) supports [SAML Role SSO Integration](https://help.aliyun.com/zh/ram/user-guide/overview) with external identity providers. You can now efficiently create RAM resources related to SAML SSO integration using a Terraform Module.
@@ -25,7 +28,7 @@ Then, create an "Alibaba Cloud Role SSO" application by referring to the [Creati
 
 Once configured, download the IdP metadata file from the IDaaS console, which is an XML document. You will use this later to replace the corresponding XML example in the Terraform code.
 
-![](imgs/1.jpg)
+![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/en_1.jpg)
 
 ### Configuring RAM (via Terraform)
 Next, we will use Terraform to create the SAML Identity Provider and RAM Role.
@@ -77,20 +80,20 @@ module "ram-role-for-saml-example" {
 
 You can view them in the RAM Console.
 
-![](imgs/2.jgp)
+![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/en_2.jgp)
 
-![](imgs/3.jpg)
+![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/en_3.jpg)
 
 ### SSO Login to Alibaba Cloud
 Log in with the IDaaS user created earlier. If you don't know how to log in, refer to the IDaaS documentation [IDaaS - First Time Single Sign-On](https://help.aliyun.com/zh/idaas/eiam/getting-started/logon-and-sso).
 
 After logging in, click on the "Alibaba Cloud Role SSO" application you just configured to access the Alibaba Cloud Console, where your identity will be the RAM role we created using Terraform.
 
-![](imgs/4.jpg)
+![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/en_4.jpg)
 
-![](imgs/5.jpg)
+![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/en_5.jpg)
 
-![](imgs/6.jpg)
+![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/en_6.jpg)
 
 
 <!-- 在根目录下运行命令 `terraform-docs markdown . --output-file "./README.md"`，可将所有信息自动填充 -->
