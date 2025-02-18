@@ -1,4 +1,7 @@
 ram-role-for-saml
+
+中文简体 | [English](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/modules/ram-role-for-saml/README.md)
+
 =================
 
 阿里云访问控制（RAM）支持与外部身份提供商实现 [SAML角色SSO集成](https://help.aliyun.com/zh/ram/user-guide/overview)，现在我们可以使用Terraform Moulde来高效地创建SAML SSO集成有关的RAM资源。
