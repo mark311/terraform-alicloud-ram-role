@@ -96,7 +96,6 @@ After logging in, click on the "Alibaba Cloud Role SSO" application you just con
 ![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/en_6.jpg)
 
 
-<!-- 在根目录下运行命令 `terraform-docs markdown . --output-file "./README.md"`，可将所有信息自动填充 -->
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

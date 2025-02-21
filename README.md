@@ -1,5 +1,7 @@
-Terraform module which create RAM roles on Alibaba Cloud.  
+Terraform module which create RAM roles on Alibaba Cloud.
+  
 terraform-alicloud-ram-role
+===========================
 
 English | [简体中文](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/README-CN.md)
 
@@ -185,7 +187,6 @@ and then run `terraform init` and `terraform apply` to make the defined provider
 
 More details see [How to use provider in the module](https://www.terraform.io/docs/language/modules/develop/providers.html#passing-providers-explicitly)
 
-<!-- 在根目录下运行命令 `terraform-docs markdown . --output-file "./README.md"`，可将所有信息自动填充 -->
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -202,7 +203,7 @@ More details see [How to use provider in the module](https://www.terraform.io/do
 
 ## Modules
 
-No modules.
+* [ram-role-for-saml](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/modules/ram-role-for-saml)([example](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/examples/for-saml)) - Alibaba Cloud's Resource Access Management (RAM) supports [SAML Role SSO Integration](https://help.aliyun.com/zh/ram/user-guide/overview) with external identity providers. You can now efficiently create RAM resources related to SAML SSO integration using a Terraform Module.。
 
 ## Resources
 

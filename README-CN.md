@@ -1,5 +1,9 @@
+Terraform module which create RAM roles on Alibaba Cloud.
+
 terraform-alicloud-ram-role
 ===========================
+
+简体中文 | [English](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/README.md)
 
 该Terraform模块用于在阿里云上创建自定义RAM角色并为其绑定RAM Policy。
 
@@ -67,15 +71,15 @@ module "ram_role" {
 
 ## 模块
 
-* [ram-role-for-saml](./modules/ram-role-for-saml)
+* [ram-role-for-saml](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/modules/ram-role-for-saml)([example](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/examples/for-saml)) - 阿里云访问控制（RAM）支持与外部身份提供商实现 [SAML角色SSO集成](https://help.aliyun.com/zh/ram/user-guide/overview)，可用来高效地创建SAML SSO集成有关的RAM资源。
 
 ## 示例
 
-* [basic](./examples/basic)
-* [complete](./examples/complete)
-* [complete-new](./examples/complete-new)
-* [custom-trust-policy](./examples/custom-trust-policy)
-* [for-saml](./examples/for-saml)
+* [basic](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/examples/basic)
+* [complete](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/examples/complete)
+* [complete-new](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/examples/complete-new)
+* [custom-trust-policy](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/examples/custom-trust-policy)
+* [for-saml](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/examples/for-saml)
 
 
 ## 注意事项
@@ -142,7 +146,6 @@ module "ram_role" {
 
 更多provider的使用细节，请移步[How to use provider in the module](https://www.terraform.io/docs/language/modules/develop/providers.html#passing-providers-explicitly)
 
-<!-- 在根目录下运行命令 `terraform-docs markdown . --output-file "./README.md"`，可将所有信息自动填充 -->
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

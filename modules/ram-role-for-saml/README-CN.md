@@ -1,6 +1,6 @@
 ram-role-for-saml
 
-中文简体 | [English](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/modules/ram-role-for-saml/README.md)
+简体中文 | [English](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/modules/ram-role-for-saml/README.md)
 
 =================
 
@@ -98,7 +98,6 @@ module "ram-role-for-saml-example" {
 ![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/zh_6.jpg)
 
 
-<!-- 在根目录下运行命令 `terraform-docs markdown . --output-file "./README.md"`，可将所有信息自动填充 -->
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
