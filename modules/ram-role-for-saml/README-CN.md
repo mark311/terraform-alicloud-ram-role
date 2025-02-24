@@ -1,8 +1,7 @@
 ram-role-for-saml
+=================
 
 简体中文 | [English](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/modules/ram-role-for-saml/README.md)
-
-=================
 
 阿里云访问控制（RAM）支持与外部身份提供商实现 [SAML角色SSO集成](https://help.aliyun.com/zh/ram/user-guide/overview)，现在我们可以使用Terraform Moulde来高效地创建SAML SSO集成有关的RAM资源。
 
@@ -15,7 +14,7 @@ ram-role-for-saml
 1. SAML身份提供商名称，比如：test-idaas-saml-provider
 2. RAM角色名称，比如：test-role-for-idaas
 
-### 配置IDaaS
+### 配置IDaaS (控制台方式)
 首先，创建IDaaS实例与账户，参考IDaaS官网文档：
 
 + [IDaaS - 免费开通实例](https://help.aliyun.com/zh/idaas/eiam/getting-started/create-an-instance-for-free)
@@ -30,7 +29,7 @@ ram-role-for-saml
 
 ![](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/scripts/imgs/zh_1.jpg)
 
-### 配置RAM (terraform方式)
+### 配置RAM
 接下来，我们使用Terraform创建SAML身份提供商与RAM角色。
 
 我们首先需要配置好Terraform的执行环境，具体操作方法可以参考阿里云官网文档：[Terraform 使用入门](https://help.aliyun.com/zh/terraform/getting-started-with-terraform)。
@@ -66,7 +65,7 @@ EOF
 
 # 创建RAM角色
 module "ram-role-for-saml-example" {
-  source = "../../modules/ram-role-for-saml"
+  source = "terraform-alicloud-modules/ram-role/alicloud//modules/ram-role-for-saml"
 
   provider_id = alicloud_ram_saml_provider.test-saml-provider.arn
 
@@ -103,14 +102,13 @@ module "ram-role-for-saml-example" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_alicloud"></a> [alicloud](#requirement\_alicloud) | >= 1.220.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_alicloud"></a> [alicloud](#provider\_alicloud) | >= 1.220.0 |
+| <a name="provider_alicloud"></a> [alicloud](#provider\_alicloud) | n/a |
 
 ## Modules
 
@@ -120,24 +118,23 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [alicloud_ram_role.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/ram_role) | resource |
-| [alicloud_ram_role_policy_attachment.custom_role_policies](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/ram_role_policy_attachment) | resource |
-| [alicloud_ram_role_policy_attachment.custom_role_system_policies](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/ram_role_policy_attachment) | resource |
-| [alicloud_caller_identity.current](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/data-sources/caller_identity) | data source |
-| [alicloud_ram_policy_document.assume_role_with_saml](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/data-sources/ram_policy_document) | data source |
+| [alicloud_ram_role.this](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_role) | resource |
+| [alicloud_ram_role_policy_attachment.custom_role_policies](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_role_policy_attachment) | resource |
+| [alicloud_ram_role_policy_attachment.custom_role_system_policies](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_role_policy_attachment) | resource |
+| [alicloud_ram_policy_document.assume_role_with_saml](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/data-sources/ram_policy_document) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_create"></a> [create](#input\_create) | Whether to create a role | `bool` | `false` | no |
+| <a name="input_create"></a> [create](#input\_create) | Whether to create a role | `bool` | `true` | no |
 | <a name="input_force"></a> [force](#input\_force) | This parameter is used for RAM role force destroy | `bool` | `false` | no |
 | <a name="input_managed_custom_policy_names"></a> [managed\_custom\_policy\_names](#input\_managed\_custom\_policy\_names) | List of names of managed policies of Custom type to attach to RAM user | `list(string)` | `[]` | no |
 | <a name="input_managed_system_policy_names"></a> [managed\_system\_policy\_names](#input\_managed\_system\_policy\_names) | List of names of managed policies of System type to attach to RAM user | `list(string)` | `[]` | no |
 | <a name="input_max_session_duration"></a> [max\_session\_duration](#input\_max\_session\_duration) | Maximum CLI/API session duration in seconds between 3600 and 43200 | `number` | `3600` | no |
-| <a name="input_provider_id"></a> [provider\_id](#input\_provider\_id) | ID of the SAML Provider. Use provider\_ids to specify several IDs. | `string` | `""` | no |
+| <a name="input_provider_id"></a> [provider\_id](#input\_provider\_id) | ID of the SAML Provider. Use provider\_ids to specify several IDs. | `string` | `null` | no |
 | <a name="input_provider_ids"></a> [provider\_ids](#input\_provider\_ids) | List of SAML Provider IDs | `list(string)` | `[]` | no |
-| <a name="input_ram_role_description"></a> [ram\_role\_description](#input\_ram\_role\_description) | RAM Role description | `string` | `""` | no |
+| <a name="input_role_description"></a> [role\_description](#input\_role\_description) | RAM Role description | `string` | `"this role was created via terraform module ram-role/modules/ram-role-for-saml."` | no |
 | <a name="input_role_name"></a> [role\_name](#input\_role\_name) | RAM role name | `string` | `null` | no |
 
 ## Outputs
