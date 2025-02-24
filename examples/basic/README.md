@@ -17,19 +17,21 @@ Run `terraform destroy` when you don't need these resources.
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_alicloud"></a> [alicloud](#provider\_alicloud) | 1.238.0 |
+| <a name="provider_alicloud"></a> [alicloud](#provider\_alicloud) | n/a |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ram-assumable-role-example"></a> [ram-assumable-role-example](#module\_ram-assumable-role-example) | ../.. | n/a |
+| <a name="module_example"></a> [example](#module\_example) | ../.. | n/a |
 
 ## Resources
 
@@ -49,6 +51,4 @@ No inputs.
 | <a name="output_role_id"></a> [role\_id](#output\_role\_id) | ID of RAM role |
 | <a name="output_role_name"></a> [role\_name](#output\_role\_name) | Name of RAM role |
 | <a name="output_role_requires_mfa"></a> [role\_requires\_mfa](#output\_role\_requires\_mfa) | Whether RAM role requires MFA |
-| <a name="output_this_role_trusted_services"></a> [this\_role\_trusted\_services](#output\_this\_role\_trusted\_services) | (Deprecated) AliCloud services who can play this role. Works with variable 'services' |
-| <a name="output_this_role_trusted_users"></a> [this\_role\_trusted\_users](#output\_this\_role\_trusted\_users) | (Deprecated) RAM users who can play this role. Works with variable 'users' |
 <!-- END_TF_DOCS -->

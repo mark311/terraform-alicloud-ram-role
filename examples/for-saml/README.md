@@ -19,26 +19,28 @@ Run `terraform destroy` when you don't need these resources.
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_alicloud"></a> [alicloud](#requirement\_alicloud) | >= 1.220.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_alicloud"></a> [alicloud](#provider\_alicloud) | 1.237.0 |
+| <a name="provider_alicloud"></a> [alicloud](#provider\_alicloud) | n/a |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ram-assumable-role-with-saml-example"></a> [ram-assumable-role-with-saml-example](#module\_ram-assumable-role-with-saml-example) | ../../modules/ram-role-for-saml | n/a |
+| <a name="module_example"></a> [example](#module\_example) | ../../modules/ram-role-for-saml | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [alicloud_caller_identity.current](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/data-sources/caller_identity) | data source |
+| [alicloud_ram_saml_provider.provider1](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_saml_provider) | resource |
+| [alicloud_ram_saml_provider.provider2](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_saml_provider) | resource |
+| [alicloud_ram_saml_provider.provider3](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_saml_provider) | resource |
+| [alicloud_caller_identity.current](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/data-sources/caller_identity) | data source |
 
 ## Inputs
 
