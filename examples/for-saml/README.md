@@ -26,6 +26,7 @@ Run `terraform destroy` when you don't need these resources.
 | Name | Version |
 |------|---------|
 | <a name="provider_alicloud"></a> [alicloud](#provider\_alicloud) | n/a |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
 
@@ -40,6 +41,7 @@ Run `terraform destroy` when you don't need these resources.
 | [alicloud_ram_saml_provider.provider1](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_saml_provider) | resource |
 | [alicloud_ram_saml_provider.provider2](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_saml_provider) | resource |
 | [alicloud_ram_saml_provider.provider3](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_saml_provider) | resource |
+| [random_integer.default](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) | resource |
 
 ## Inputs
 

@@ -1,6 +1,6 @@
 Terraform module which create RAM roles on Alibaba Cloud.
 
-terraform-alicloud-ram-role
+ram-role
 ===========================
 
 简体中文 | [English](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/README.md)

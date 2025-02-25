@@ -22,20 +22,25 @@ EOF
   )
 }
 
+resource "random_integer" "default" {
+  min = 0
+  max = 99999
+}
+
 resource "alicloud_ram_saml_provider" "provider1" {
-  saml_provider_name            = "${local.resource_name_prefix}-provider1"
+  saml_provider_name            = "${local.resource_name_prefix}-${random_integer.default.result}-provider1"
   encodedsaml_metadata_document = local.saml_metadata_xml
   description                   = "saml provider #1 created by RAM terraform module example."
 }
 
 resource "alicloud_ram_saml_provider" "provider2" {
-  saml_provider_name            = "${local.resource_name_prefix}-provider2"
+  saml_provider_name            = "${local.resource_name_prefix}-${random_integer.default.result}-provider2"
   encodedsaml_metadata_document = local.saml_metadata_xml
   description                   = "saml provider #2 created by RAM terraform module example."
 }
 
 resource "alicloud_ram_saml_provider" "provider3" {
-  saml_provider_name            = "${local.resource_name_prefix}-provider3"
+  saml_provider_name            = "${local.resource_name_prefix}-${random_integer.default.result}-provider3"
   encodedsaml_metadata_document = local.saml_metadata_xml
   description                   = "saml provider #3 created by RAM terraform module example."
 }
@@ -45,7 +50,7 @@ resource "alicloud_ram_saml_provider" "provider3" {
 ####################################################
 module "example" {
   source    = "../../modules/ram-role-for-saml"
-  role_name = "${local.resource_name_prefix}-example"
+  role_name = "${local.resource_name_prefix}-${random_integer.default.result}-example"
 
   provider_id = alicloud_ram_saml_provider.provider1.arn
   provider_ids = [
