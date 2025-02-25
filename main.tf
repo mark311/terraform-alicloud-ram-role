@@ -5,12 +5,12 @@ resource "random_uuid" "this" {
 # ram_role
 #############################
 locals {
-  role_name                   = var.role_name != null ? var.role_name : substr("terraform-ram-role-${replace(random_uuid.this.result, "-", "")}", 0, 32)
-  admin_role_policy_name      = "AdministratorAccess"
-  readonly_role_policy_name   = "ReadOnlyAccess"
+  role_name                 = var.role_name != null ? var.role_name : substr("terraform-ram-role-${replace(random_uuid.this.result, "-", "")}", 0, 32)
+  admin_role_policy_name    = "AdministratorAccess"
+  readonly_role_policy_name = "ReadOnlyAccess"
 
-  trusted_principal_arns      = jsonencode(var.trusted_principal_arns)
-  trusted_services            = jsonencode(var.trusted_services)
+  trusted_principal_arns = jsonencode(var.trusted_principal_arns)
+  trusted_services       = jsonencode(var.trusted_services)
 
   assume_role_document = <<EOF
 		{
@@ -53,10 +53,10 @@ locals {
 resource "alicloud_ram_role" "this" {
   count = var.create ? 1 : 0
 
-  name        = local.role_name
-  document    = coalesce(
+  name = local.role_name
+  document = coalesce(
     var.trust_policy,
-    (var.role_requires_mfa ? local.assume_role_with_mfa_document : local.assume_role_document))
+  (var.role_requires_mfa ? local.assume_role_with_mfa_document : local.assume_role_document))
   description = var.role_description
   force       = var.force
 

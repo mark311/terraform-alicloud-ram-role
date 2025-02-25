@@ -40,7 +40,6 @@ Run `terraform destroy` when you don't need these resources.
 | [alicloud_ram_saml_provider.provider1](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_saml_provider) | resource |
 | [alicloud_ram_saml_provider.provider2](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_saml_provider) | resource |
 | [alicloud_ram_saml_provider.provider3](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_saml_provider) | resource |
-| [alicloud_caller_identity.current](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/data-sources/caller_identity) | data source |
 
 ## Inputs
 

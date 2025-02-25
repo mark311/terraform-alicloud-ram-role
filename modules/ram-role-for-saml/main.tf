@@ -6,11 +6,11 @@ data "alicloud_ram_policy_document" "assume_role_with_saml" {
   count = var.create ? 1 : 0
 
   statement {
-    effect  = "Allow"
+    effect = "Allow"
     action = ["sts:AssumeRole"]
 
     principal {
-      entity = "Federated"
+      entity      = "Federated"
       identifiers = local.identifiers
     }
   }

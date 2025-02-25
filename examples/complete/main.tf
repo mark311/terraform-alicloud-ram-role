@@ -29,14 +29,14 @@ resource "alicloud_ram_policy" "default" {
 module "example" {
   source = "../.."
 
-  create      = true
-  role_name   = "${local.resource_name_prefix}-example"
+  create           = true
+  role_name        = "${local.resource_name_prefix}-example"
   role_description = "${local.resource_name_prefix}-example"
 
-  max_session_duration      = 7200
-  role_requires_mfa         = true
-  attach_admin_policy       = true
-  attach_readonly_policy    = true
+  max_session_duration   = 7200
+  role_requires_mfa      = true
+  attach_admin_policy    = true
+  attach_readonly_policy = true
 
   managed_system_policy_names = [
     "AliyunECSReadOnlyAccess"

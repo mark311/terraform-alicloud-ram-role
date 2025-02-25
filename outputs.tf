@@ -5,12 +5,12 @@ output "role_name" {
 
 output "role_arn" {
   description = "ARN of RAM role"
-  value       = element(concat(alicloud_ram_role.this.*.arn, [""]), 0)
+  value       = element(concat(alicloud_ram_role.this[*].arn, [""]), 0)
 }
 
 output "role_id" {
   description = "ID of RAM role"
-  value       = element(concat(alicloud_ram_role.this.*.role_id, [""]), 0)
+  value       = element(concat(alicloud_ram_role.this[*].role_id, [""]), 0)
 }
 
 output "role_requires_mfa" {

@@ -1,9 +1,7 @@
-data "alicloud_caller_identity" "current" {}
 
 locals {
-  account_id          = data.alicloud_caller_identity.current.account_id
   resource_name_prefix = "tfmod-ram-role-for-saml"
-  saml_metadata_xml    = base64encode(<<EOF
+  saml_metadata_xml = base64encode(<<EOF
 <?xml version="1.0" encoding="UTF-8"?><md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="SIMPCp1J9vJt142Dvg5AT2Efcn9JumMe7fau" entityID="https://574b3zcn.aliyunidaas.com/api/v2/app_m6rpawvpeqcjluw7dvyhp37gzu/saml2/meta" validUntil="2125-02-05T05:00:10.578Z">
 <md:IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
 <md:KeyDescriptor use="signing">
@@ -21,7 +19,7 @@ locals {
 </md:IDPSSODescriptor>
 </md:EntityDescriptor>
 EOF
-    )
+  )
 }
 
 resource "alicloud_ram_saml_provider" "provider1" {
@@ -46,7 +44,7 @@ resource "alicloud_ram_saml_provider" "provider3" {
 # basic usage
 ####################################################
 module "example" {
-  source = "../../modules/ram-role-for-saml"
+  source    = "../../modules/ram-role-for-saml"
   role_name = "${local.resource_name_prefix}-example"
 
   provider_id = alicloud_ram_saml_provider.provider1.arn
