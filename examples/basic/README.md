@@ -1,6 +1,6 @@
 # RAM assumable role example
 
-This example illustrates how to create a more complicated assumable role.
+This example illustrates how to create a basic assumable role.
 
 # Usage
 
@@ -38,7 +38,6 @@ Run `terraform destroy` when you don't need these resources.
 
 | Name | Type |
 |------|------|
-| [alicloud_ram_policy.default](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_policy) | resource |
 | [random_integer.default](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) | resource |
 | [alicloud_account.this](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/data-sources/account) | data source |
 

@@ -1,181 +1,93 @@
-terraform-alicloud-ram-role
+Terraform module which create RAM roles on Alibaba Cloud.
+
+ram-role
 ===========================
 
-Terraform模块用于在阿里云上创建自定义RAM角色并为其绑定RAM Policy。
+简体中文 | [English](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/README.md)
 
-支持以下类型的资源：
-
-* [RAM role](https://www.terraform.io/docs/providers/alicloud/r/ram_role.html)
-* [RAM role attachment](https://www.terraform.io/docs/providers/alicloud/r/ram_role_attachment.html)
+该Terraform模块用于在阿里云上创建自定义RAM角色并为其绑定RAM Policy。
 
 ## 用法
 
-#### 使用Terraform默认的操作创建自定义角色
+创建一个名为 test-role 的角色，授予其系统策略 AliyunOSSReadOnlyAccess ，信任账号 123456789012\*\*\*\* 内的所有RAM用户、RAM角色扮演。
 
 ```hcl
 module "ram_role" {
   source = "terraform-alicloud-modules/ram-role/alicloud"
-  role_name   = "test-role"
-  users = [
-    # 添加可信用户
-    {
-      user_names = join(",", ["user3", "user4"])
-      account_id = "123456789012****"
-    },
-    # 如果不指定accountID，将使用当前用户
-    {
-      user_names = join(",", ["user1", "user2"])
-    }
+  role_name = "test-role"
+  managed_system_policy_names = [
+    "AliyunOSSReadOnlyAccess"
   ]
-  // 指定预定义的或者自定义的可信服务
-  services = ["ecs", "apigateway", "oss.aliyuncs.com", "ecs-cn-hangzhou.aliyuncs.com"]
-  force    = true
-  policies = [
-    # 绑定系统策略
-    {
-      policy_names = join(",", ["AliyunVPCFullAccess","AliyunKafkaFullAccess"])
-      policy_type  = "System"
-    },
-    # 绑定自定义策略
-    {
-      policy_names = join(",", ["VpcListTagResources", "RamPolicyForZhangsan"])
-      policy_type  = "Custom"
-    },
-    # 绑定自定义策略
-    {
-      policy_names = join(",", module.ram_policy.this_policy_name)
-    }
-  ]
-}
-
-module "ram_policy" {
-  source = "terraform-alicloud-modules/ram-policy/alicloud"
-  policies = [
-    {
-      name            = "manage-slb-and-eip-resource"
-      defined_actions = join(",", ["slb-all", "vpc-all", "vswitch-all"])
-      actions         = join(",", ["vpc:AssociateEipAddress", "vpc:UnassociateEipAddress"])
-      resources       = join(",", ["acs:vpc:*:*:eip/eip-12345", "acs:slb:*:*:*"])
-    },
-    {
-      #actions is the action of custom specific resource.
-      #resources is the specific object authorized to customize.
-      actions   = join(",", ["ecs:ModifyInstanceAttribute", "vpc:ModifyVpc", "vswitch:ModifyVSwitch"])
-      resources = join(",", ["acs:ecs:*:*:instance/i-001", "acs:vpc:*:*:vpc/v-001", "acs:vpc:*:*:vswitch/vsw-001"])
-      effect    = "Deny"
-    }
+  trusted_principal_arns = [
+    "acs:ram::123456789012****:root"
   ]
 }
 ```
 
-#### 创建云服务级别的自定义角色，并为其授权相应的策略
+创建一个名为 test-role 的角色，授予其系统策略 AliyunOSSReadOnlyAccess ，信任账号 123456789012\*\*\*\* 内的RAM用户user1、RAM角色role1 扮演。
 
 ```hcl
 module "ram_role" {
   source = "terraform-alicloud-modules/ram-role/alicloud"
-  role_name   = "test-role"
-  # Setting predefined or custom services
-  services = ["ecs", "apigateway", "oss.aliyuncs.com", "ecs-cn-hangzhou.aliyuncs.com"]
-  force    = true
-  policies = [
-    # Binding a system policy.
-    {
-      policy_names = join(",", ["AliyunVPCFullAccess","AliyunKafkaFullAccess"])
-      policy_type  = "System"
-    },
-    # When binding custom policy, make sure this policy has been created.
-    {
-      policy_names = join(",", ["VpcListTagResources", "RamPolicyForZhangsan"])
-      policy_type  = "Custom"
-    },
-    # Create Custom policy and bind the ram role.
-    {
-      policy_names = join(",", module.ram_policy.this_policy_name)
-    }
+  role_name = "test-role"
+  managed_system_policy_names = [
+    "AliyunOSSReadOnlyAccess"
   ]
-}
-
-module "ram_policy" {
-  source = "terraform-alicloud-modules/ram-policy/alicloud"
-  policies = [
-    {
-      name            = "manage-slb-and-eip-resource"
-      defined_actions = join(",", ["slb-all", "vpc-all", "vswitch-all"])
-      actions         = join(",", ["vpc:AssociateEipAddress", "vpc:UnassociateEipAddress"])
-      resources       = join(",", ["acs:vpc:*:*:eip/eip-12345", "acs:slb:*:*:*"])
-    },
-    {
-      #actions is the action of custom specific resource.
-      #resources is the specific object authorized to customize.
-      actions   = join(",", ["ecs:ModifyInstanceAttribute", "vpc:ModifyVpc", "vswitch:ModifyVSwitch"])
-      resources = join(",", ["acs:ecs:*:*:instance/i-001", "acs:vpc:*:*:vpc/v-001", "acs:vpc:*:*:vswitch/vsw-001"])
-      effect    = "Deny"
-    }
+  trusted_principal_arns = [
+    "acs:ram::123456789012****:user/user1",
+    "acs:ram::123456789012****:role/role1"
   ]
 }
 ```
 
-#### 创建云账号级别的自定义角色，并为其授权相应的策略
+创建一个名为 test-role 的角色，授予其系统策略 AliyunOSSReadOnlyAccess ，信任 ecs.aliyuncs.com 云服务扮演。
 
 ```hcl
 module "ram_role" {
   source = "terraform-alicloud-modules/ram-role/alicloud"
-  role_name   = "test-role"
-  users = [
-    # Add a trusted user under a specified account.
-    {
-      user_names = join(",", ["user3", "user4"])
-      account_id = "123456789012****"
-    },
-    # If not set `account_id`, the default is the current account.
-    {
-      user_names = join(",", ["user1", "user2"])
-    }
+  role_name = "test-role"
+  managed_system_policy_names = [
+    "AliyunOSSReadOnlyAccess"
   ]
-  force    = true
-  policies = [
-    # Binding a system policy.
-    {
-      policy_names = join(",", ["AliyunVPCFullAccess","AliyunKafkaFullAccess"])
-      policy_type  = "System"
-    },
-    # When binding custom policy, make sure this policy has been created.
-    {
-      policy_names = join(",", ["VpcListTagResources", "RamPolicyForZhangsan"])
-      policy_type  = "Custom"
-    },
-    # Create Custom policy and bind the ram role.
-    {
-      policy_names = join(",", module.ram_policy.this_policy_name)
-    }
-  ]
-}
-
-module "ram_policy" {
-  source = "terraform-alicloud-modules/ram-policy/alicloud"
-  policies = [
-    {
-      name            = "manage-slb-and-eip-resource"
-      defined_actions = join(",", ["slb-all", "vpc-all", "vswitch-all"])
-      actions         = join(",", ["vpc:AssociateEipAddress", "vpc:UnassociateEipAddress"])
-      resources       = join(",", ["acs:vpc:*:*:eip/eip-12345", "acs:slb:*:*:*"])
-    },
-    {
-      #actions is the action of custom specific resource.
-      #resources is the specific object authorized to customize.
-      actions   = join(",", ["ecs:ModifyInstanceAttribute", "vpc:ModifyVpc", "vswitch:ModifyVSwitch"])
-      resources = join(",", ["acs:ecs:*:*:instance/i-001", "acs:vpc:*:*:vpc/v-001", "acs:vpc:*:*:vswitch/vsw-001"])
-      effect    = "Deny"
-    }
+  trusted_services = [
+    "ecs.aliyuncs.com"
   ]
 }
 ```
+
+创建一个名为 test-role 的角色，授予其系统策略 AliyunOSSReadOnlyAccess ，信任 SAML 身份提供商 acs:ram::123456789012\*\*\*\*:saml-provider/test-provider 扮演。
+查看模块 [ram-role-for-saml](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/modules/ram-role-for-saml) 的 README 文档获得更详细的用法指引。
+
+```hcl
+module "ram_role" {
+  source = "terraform-alicloud-modules/ram-role/alicloud"
+  role_name = "test-role"
+  managed_system_policy_names = [
+    "AliyunOSSReadOnlyAccess"
+  ]
+  provider_id = "acs:ram::123456789012****:saml-provider/test-provider"
+}
+```
+
+## 模块
+
+* [ram-role-for-saml](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/modules/ram-role-for-saml)([example](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/examples/for-saml)) - 阿里云访问控制（RAM）支持与外部身份提供商实现 [SAML角色SSO集成](https://help.aliyun.com/zh/ram/user-guide/overview)，可用来高效地创建SAML SSO集成有关的RAM资源。
 
 ## 示例
 
-* [ram-role 完整示例](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/tree/master/examples/complete)
+* [basic](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/examples/basic)
+* [complete](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/examples/complete)
+* [custom-trust-policy](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/examples/custom-trust-policy)
+* [for-saml](https://github.com/terraform-alicloud-modules/terraform-alicloud-ram-role/blob/master/examples/for-saml)
+
 
 ## 注意事项
+本Module从版本v2.0.0开始已经移除掉`services`参数和`users`参数，您可以通过`trusted_services`、`trusted_principal_arns`和`trust_policy`参数来设置角色的信任主体。
+
+本Module从版本v2.0.0开始已经移除掉`policies`参数，您可以通过`managed_custom_policy_names`参数和`managed_system_policy_names`参数为角色授予自定义策略和系统策略，并可通过`attach_admin_policy`参数和`attach_readonly_policy`参数为角色授予Admin策略和只读策略。
+
+本Module从版本v2.0.0开始已经移除掉`existing_role_name`参数，您可以通过`role_name`参数来创建RAM角色。
+
 本Module从版本v1.1.0开始已经移除掉如下的 provider 的显式设置：
 
 ```hcl
@@ -239,12 +151,62 @@ module "ram_role" {
 
 更多provider的使用细节，请移步[How to use provider in the module](https://www.terraform.io/docs/language/modules/develop/providers.html#passing-providers-explicitly)
 
-## Terraform 版本
+<!-- BEGIN_TF_DOCS -->
+## Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.0 |
-| <a name="requirement_alicloud"></a> [alicloud](#requirement\_alicloud) | >= 1.64.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_alicloud"></a> [alicloud](#provider\_alicloud) | n/a |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [alicloud_ram_role.this](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_role) | resource |
+| [alicloud_ram_role_policy_attachment.admin](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_role_policy_attachment) | resource |
+| [alicloud_ram_role_policy_attachment.custom](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_role_policy_attachment) | resource |
+| [alicloud_ram_role_policy_attachment.readonly](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_role_policy_attachment) | resource |
+| [alicloud_ram_role_policy_attachment.system](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_role_policy_attachment) | resource |
+| [random_uuid.this](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_attach_admin_policy"></a> [attach\_admin\_policy](#input\_attach\_admin\_policy) | Whether to attach an admin policy to a role | `bool` | `false` | no |
+| <a name="input_attach_readonly_policy"></a> [attach\_readonly\_policy](#input\_attach\_readonly\_policy) | Whether to attach a readonly policy to a role | `bool` | `false` | no |
+| <a name="input_create"></a> [create](#input\_create) | Whether to create ram role. If true, the 'users' or 'services' can not be empty | `bool` | `true` | no |
+| <a name="input_force"></a> [force](#input\_force) | Whether to delete ram policy forcibly, default to true | `bool` | `true` | no |
+| <a name="input_managed_custom_policy_names"></a> [managed\_custom\_policy\_names](#input\_managed\_custom\_policy\_names) | List of names of managed policies of Custom type to attach to RAM role | `list(string)` | `[]` | no |
+| <a name="input_managed_system_policy_names"></a> [managed\_system\_policy\_names](#input\_managed\_system\_policy\_names) | List of names of managed policies of System type to attach to RAM role | `list(string)` | `[]` | no |
+| <a name="input_max_session_duration"></a> [max\_session\_duration](#input\_max\_session\_duration) | Maximum session duration in seconds, refer to the parameter MaxSessionDuration of [CreateRole](https://api.aliyun.com/document/Ram/2015-05-01/CreateRole) | `number` | `3600` | no |
+| <a name="input_role_description"></a> [role\_description](#input\_role\_description) | Description of the RAM role. | `string` | `"this role was created via terraform module ram-role."` | no |
+| <a name="input_role_name"></a> [role\_name](#input\_role\_name) | The name of role. If not set, a default name with prefix 'terraform-ram-role-' will be returned | `string` | `null` | no |
+| <a name="input_role_requires_mfa"></a> [role\_requires\_mfa](#input\_role\_requires\_mfa) | Whether role requires MFA | `bool` | `true` | no |
+| <a name="input_trust_policy"></a> [trust\_policy](#input\_trust\_policy) | A custom role trust policy. Conflicts with 'trusted\_principal\_arns' and 'trusted\_services' | `string` | `null` | no |
+| <a name="input_trusted_principal_arns"></a> [trusted\_principal\_arns](#input\_trusted\_principal\_arns) | ARNs of Alibaba Cloud entities who can assume these roles. Conflicts with 'trust\_policy' | `list(string)` | `[]` | no |
+| <a name="input_trusted_services"></a> [trusted\_services](#input\_trusted\_services) | Alibaba Cloud Services that can assume these roles. Conflicts with 'trust\_policy' | `list(string)` | `[]` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | ARN of RAM role |
+| <a name="output_role_id"></a> [role\_id](#output\_role\_id) | ID of RAM role |
+| <a name="output_role_name"></a> [role\_name](#output\_role\_name) | Name of the ram role |
+| <a name="output_role_requires_mfa"></a> [role\_requires\_mfa](#output\_role\_requires\_mfa) | Whether RAM role requires MFA |
+<!-- END_TF_DOCS -->
 
 作者
 -------

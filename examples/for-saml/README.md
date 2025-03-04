@@ -1,6 +1,6 @@
-# RAM assumable role example
+# RAM assumable role with SAML example
 
-This example illustrates how to create a more complicated assumable role.
+This example illustrates how to create a basic assumable role with SAML.
 
 # Usage
 
@@ -32,15 +32,16 @@ Run `terraform destroy` when you don't need these resources.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_example"></a> [example](#module\_example) | ../.. | n/a |
+| <a name="module_example"></a> [example](#module\_example) | ../../modules/ram-role-for-saml | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [alicloud_ram_policy.default](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_policy) | resource |
+| [alicloud_ram_saml_provider.provider1](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_saml_provider) | resource |
+| [alicloud_ram_saml_provider.provider2](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_saml_provider) | resource |
+| [alicloud_ram_saml_provider.provider3](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/ram_saml_provider) | resource |
 | [random_integer.default](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) | resource |
-| [alicloud_account.this](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/data-sources/account) | data source |
 
 ## Inputs
 
@@ -53,5 +54,4 @@ No inputs.
 | <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | ARN of RAM role |
 | <a name="output_role_id"></a> [role\_id](#output\_role\_id) | ID of RAM role |
 | <a name="output_role_name"></a> [role\_name](#output\_role\_name) | Name of RAM role |
-| <a name="output_role_requires_mfa"></a> [role\_requires\_mfa](#output\_role\_requires\_mfa) | Whether RAM role requires MFA |
 <!-- END_TF_DOCS -->

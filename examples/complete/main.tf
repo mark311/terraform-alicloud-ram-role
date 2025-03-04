@@ -1,62 +1,55 @@
-data "alicloud_account" "default" {
-}
-resource "random_uuid" "default" {
+data "alicloud_account" "this" {
 }
 
-resource "alicloud_ram_user" "default" {
-  name  = "tfexample"
-  force = var.force
+locals {
+  resource_name_prefix = "tfmod-ram-role-complete-new"
 }
 
-module "ram_role" {
+resource "random_integer" "default" {
+  min = 10000
+  max = 99999
+}
+
+resource "alicloud_ram_policy" "default" {
+  policy_name     = "${local.resource_name_prefix}-examplepolicy-${random_integer.default.result}"
+  policy_document = <<EOF
+        {
+                "Version": "1",
+                "Statement": [
+                  {
+                        "Action": "mns:*",
+                        "Resource": "*",
+                        "Effect": "Allow"
+                  }
+                ]
+        }
+        EOF
+}
+
+module "example" {
   source = "../.."
 
-  create = true
+  create           = true
+  role_name        = "${local.resource_name_prefix}-${random_integer.default.result}-example"
+  role_description = "${local.resource_name_prefix}-${random_integer.default.result}-example"
 
-  services = var.services
-  users = [
-    {
-      user_names = alicloud_ram_user.default.name
-      account_id = data.alicloud_account.default.id
-    }
-  ]
-  ram_role_description = var.ram_role_description
-  force                = var.force
+  max_session_duration   = 7200
+  role_requires_mfa      = true
+  attach_admin_policy    = true
+  attach_readonly_policy = true
 
-}
-
-module "use_existing_role" {
-  source = "../.."
-
-  create             = false
-  existing_role_name = module.ram_role.this_role_name
-
-  policies = [
-    {
-      policy_names = join(",", ["AliyunVPCFullAccess", "AliyunKafkaFullAccess"])
-      policy_type  = "System"
-    },
-    {
-      policy_names = join(",", module.ram_policy.this_policy_name)
-    }
+  managed_system_policy_names = [
+    "AliyunECSReadOnlyAccess"
   ]
 
-}
+  managed_custom_policy_names = [
+    alicloud_ram_policy.default.policy_name
+  ]
 
-module "ram_policy" {
-  source = "terraform-alicloud-modules/ram-policy/alicloud"
-  policies = [
-    {
-      name            = substr("terraform-ram-role-${replace(random_uuid.default.result, "-", "")}", 0, 32)
-      defined_actions = join(",", ["slb-all", "vpc-all", "vswitch-all"])
-      actions         = join(",", ["vpc:AssociateEipAddress", "vpc:UnassociateEipAddress"])
-      resources       = join(",", ["acs:vpc:*:*:eip/eip-12345", "acs:slb:*:*:*"])
-    },
-    {
-      name      = substr("terraform-ram-role-deny-${replace(random_uuid.default.result, "-", "")}", 0, 32)
-      actions   = join(",", ["ecs:ModifyInstanceAttribute", "vpc:ModifyVpc", "vswitch:ModifyVSwitch"])
-      resources = join(",", ["acs:ecs:*:*:instance/i-001", "acs:vpc:*:*:vpc/v-001", "acs:vpc:*:*:vswitch/vsw-001"])
-      effect    = "Deny"
-    }
+  trusted_principal_arns = [
+    "acs:ram::${data.alicloud_account.this.id}:root"
+  ]
+  trusted_services = [
+    "ecs.aliyuncs.com"
   ]
 }
